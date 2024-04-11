@@ -5,35 +5,47 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('"robust-yaml" is now active!');
 	let disposable = vscode.languages.registerHoverProvider('yaml', {
 		provideHover(document, position, token) {
-			let doc = parseDocument(document.getText());
-			let contents: string[] = [];
-			visit(doc, {
-				Map(_, map) {
-					if (map.range) {
-						let start = document.positionAt(map.range[0]);
-						let end = document.positionAt(map.range[2]);
-						if (position.isBefore(start) || position.isAfter(end)) {
-							return visit.SKIP;
+			return vscode.workspace.findFiles("**/*Component.cs").then((componentFiles) => {
+				let doc = parseDocument(document.getText());
+				let contents: string[] = [];
+				visit(doc, {
+					Map(_, map) {
+						if (map.range) {
+							let start = document.positionAt(map.range[0]);
+							let end = document.positionAt(map.range[2]);
+							if (position.isBefore(start) || position.isAfter(end)) {
+								return visit.SKIP;
+							}
 						}
-					}
-					if (map.get('type') === 'entity') {
-						let components = map.get('components');
-						if (isCollection(components)) {
-							visit(components, {
-								Pair(_, pair) {
-									if (isScalar(pair.key) && pair.key.value === 'type' && isScalar(pair.value)) {
-										contents.push(pair.value.toString());
+						if (map.get('type') === 'entity') {
+							let components = map.get('components');
+							if (isCollection(components)) {
+								visit(components, {
+									Pair(_, pair) {
+										if (isScalar(pair.key) && pair.key.value === 'type' && isScalar(pair.value)) {
+											let componentName = pair.value.toString();
+											contents.push(componentName);
+											let filename = componentFiles.find((v) => v.toString().includes(componentName));
+											if (filename) {
+												contents.push("-- File:" + filename.toString());
+											} else {
+												contents.push("-- File: NOT FOUND --");
+											}
+										}
 									}
-								}
-							});
+								});
+							}
 						}
+						return visit.SKIP;
 					}
-					return visit.SKIP;
-				}
-			});
-			return {
-			  contents: contents
-			};
+				});
+				return {
+				  contents: contents
+				};
+			}, (reason) => {
+				return { contents: [ "FAILED TO READ SOURCE FILES: " + reason ] };
+			}
+		);
 		}
 	});
 	context.subscriptions.push(disposable);
