@@ -27,7 +27,8 @@ export function activate(context: vscode.ExtensionContext) {
 											contents.push(new vscode.MarkdownString("### " + componentName));
 											let filename = componentFiles.find((v) => v.toString().includes(componentName));
 											if (filename) {
-												contents.push(new vscode.MarkdownString("* " + filename.toString()));
+												let relative = vscode.workspace.asRelativePath(filename).toString();
+												contents.push(new vscode.MarkdownString("* [" + relative + "](" + filename + ")"));
 											} else {
 												contents.push(new vscode.MarkdownString("* NOT FOUND"));
 											}
