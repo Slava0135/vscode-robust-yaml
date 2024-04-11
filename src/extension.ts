@@ -9,6 +9,13 @@ export function activate(context: vscode.ExtensionContext) {
 			let contents: string[] = [];
 			visit(doc, {
 				Map(_, map) {
+					if (map.range) {
+						let start = document.positionAt(map.range[0]);
+						let end = document.positionAt(map.range[2]);
+						if (position.isBefore(start) || position.isAfter(end)) {
+							return visit.SKIP;
+						}
+					}
 					if (map.get('type') === 'entity') {
 						let components = map.get('components');
 						if (isCollection(components)) {
