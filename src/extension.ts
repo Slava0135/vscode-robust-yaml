@@ -7,7 +7,7 @@ export function activate(context: vscode.ExtensionContext) {
 		provideHover(document, position, token) {
 			return vscode.workspace.findFiles("**/*Component.cs").then((componentFiles) => {
 				let doc = parseDocument(document.getText());
-				let contents: string[] = [];
+				let contents: vscode.MarkdownString[] = [];
 				visit(doc, {
 					Map(_, map) {
 						if (map.range) {
@@ -24,12 +24,12 @@ export function activate(context: vscode.ExtensionContext) {
 									Pair(_, pair) {
 										if (isScalar(pair.key) && pair.key.value === 'type' && isScalar(pair.value)) {
 											let componentName = pair.value.toString();
-											contents.push(componentName);
+											contents.push(new vscode.MarkdownString("### " + componentName));
 											let filename = componentFiles.find((v) => v.toString().includes(componentName));
 											if (filename) {
-												contents.push("-- File:" + filename.toString());
+												contents.push(new vscode.MarkdownString("* " + filename.toString()));
 											} else {
-												contents.push("-- File: NOT FOUND --");
+												contents.push(new vscode.MarkdownString("* NOT FOUND"));
 											}
 										}
 									}
