@@ -5,6 +5,7 @@ import { findComponent } from "./find-component";
 import { nonZeroBasedPosition } from "../range/position";
 
 describe('find component in yaml document', () => {
+
     it('one entity - one component', () => {
         let source = readSource('one-entity-one-component');
         let okComponent = findComponent(source, nonZeroBasedPosition(3, 11));
@@ -13,6 +14,12 @@ describe('find component in yaml document', () => {
         let notComponent = findComponent(source, nonZeroBasedPosition(4, 11));
         assert.equal(notComponent, undefined);
     });
+
+    it('no entity', () => {
+        let source = readSource('no-entity');
+        assert.equal(findComponent(source, nonZeroBasedPosition(3, 11)), undefined);
+    });
+
 });
 
 function readSource(name: string): string {

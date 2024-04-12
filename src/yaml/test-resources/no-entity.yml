@@ -1,4 +1,4 @@
-- type: entity
+- type: notEntity
   components:
   - type: test
     key1: value1
