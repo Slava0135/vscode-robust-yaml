@@ -12,7 +12,7 @@ export function registerHoverProvider() {
             if (component) {
                 return vscode.workspace.findFiles("**/*Component.cs").then((componentFiles) => {
                     const uri = componentFiles.find(uri => containsComponentDefinition(uri.toString(), component.toString()));
-                    contents.push(new vscode.MarkdownString(`#### ${component.toString()}`));
+                    contents.push(new vscode.MarkdownString(`#### ${component.toString()}Component`));
                     if (uri) {
                         return vscode.workspace.fs.readFile(uri);
                     }
@@ -20,7 +20,7 @@ export function registerHoverProvider() {
                     if (buf) {
                         const summary = parseSummary(buf.toString(), component.toString());
                         if (summary) {
-                            contents.push(new vscode.MarkdownString("```\n" + summary + "\n```"));
+                            contents.push(new vscode.MarkdownString("```xml\n" + summary + "\n```"));
                         }
                     }
                     return {
