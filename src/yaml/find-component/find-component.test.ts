@@ -2,7 +2,7 @@ import assert from "assert";
 import { readFileSync } from "fs";
 import path from "path";
 import { findComponent } from "./find-component";
-import { nonZeroBasedPosition } from "../range/position";
+import { nonZeroBasedPosition } from "../../range/position";
 
 describe('find component in yaml document', () => {
 

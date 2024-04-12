@@ -1,6 +1,6 @@
 import { Scalar, isCollection, isScalar, parseDocument, visit } from "yaml";
-import { Position, positionFromOffset } from "../range/position";
-import { Range } from "../range/range";
+import { Position, positionFromOffset } from "../../range/position";
+import { Range } from "../../range/range";
 
 export function findComponent(source: string, pos: Position): Scalar | undefined {
     let component: Scalar | undefined;
