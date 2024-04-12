@@ -22,6 +22,14 @@ describe('parse summary', () => {
         );
     });
 
+    it('multiline', () => {
+        const source = readSource('multiline');
+        assert.equal(
+            parseSummary(source, 'MeleeWeapon'),
+            "When given to a mob lets them do unarmed attacks\nor when given to an item lets someone wield it to do attacks."
+        );
+    });
+
 });
 
 function readSource(name: string): string {
