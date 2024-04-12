@@ -12,9 +12,11 @@ export function registerHoverProvider() {
             if (component) {
                 return vscode.workspace.findFiles("**/*Component.cs").then((componentFiles) => {
                     const uri = componentFiles.find(uri => containsComponentDefinition(uri.toString(), component.toString()));
-                    contents.push(new vscode.MarkdownString(`#### ${component.toString()}Component`));
                     if (uri) {
+                        contents.push(new vscode.MarkdownString(`#### ${component.toString()}Component`));
                         return vscode.workspace.fs.readFile(uri);
+                    } else {
+                        contents.push(new vscode.MarkdownString(`???`));
                     }
                 }).then(buf => {
                     if (buf) {
