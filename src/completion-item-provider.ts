@@ -14,7 +14,11 @@ export function registreCompletionItemProvider(): vscode.Disposable {
 				componentFiles.forEach(uri => {
 					const match = uri.toString().match(componentNameRegex);
 					if (match) {
-						list.push(new vscode.CompletionItem(match[1]));
+						const item = {
+							label: match[1],
+							detail: 'Component',
+						};
+						list.push(new vscode.CompletionItem(item, vscode.CompletionItemKind.Constructor));
 					}
 				});
 				return list;
