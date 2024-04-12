@@ -33,6 +33,20 @@ export function findAllComponents(source: string): Map<Scalar, Range> {
     return res;
 }
 
+export function isAtComponentType(source: string, pos: Position): boolean {
+    let ret = false;
+    visitComponents(source, type => {
+        if (type.range) {
+            const start = positionFromOffset(source, type.range[0]);
+            if (start && start.line === pos.line) {
+                ret = true;
+                return visit.BREAK;
+            }
+        }
+    });
+    return ret;
+}
+
 function visitComponents(source: string, callback: (type: Scalar) => symbol | undefined) {
     const doc = parseDocument(source);
     visit(doc, {

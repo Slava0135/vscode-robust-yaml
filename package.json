@@ -15,9 +15,10 @@
   "main": "./out/extension.js",
   "contributes": {
     "capabilities": {
-      "hoverProvider": "true",
-      "definitionProvider": "true",
-      "documentSemanticTokensProvider": "true"
+      "hoverProvider": true,
+      "definitionProvider": true,
+      "documentSemanticTokensProvider": true,
+      "completionItemProvider": true
     }
   },
   "configurationDefaults": {
