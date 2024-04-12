@@ -25,7 +25,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "test-unit": "mocha --require ts-node/register src/**/*.test.ts"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.6",
@@ -39,6 +40,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "ts-node": "^10.9.2",
     "yaml": "^2.4.1"
   }
 }
