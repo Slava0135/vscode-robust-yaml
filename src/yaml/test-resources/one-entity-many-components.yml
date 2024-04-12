@@ -1,0 +1,14 @@
+- type: entity
+  components:
+  - type: comp1
+    key1: value1
+    key2: value2
+    key3: value3
+  - type: comp2
+    key1: value1
+    key2: value2
+    key3: value3
+  - type: comp3
+    key1: value1
+    key2: value2
+    key3: value3
