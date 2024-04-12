@@ -1,94 +1,25 @@
 import * as vscode from 'vscode';
-import { isScalar, isCollection, parseDocument, visit } from 'yaml';
+import { findComponent } from './yaml/find-component/find-component';
+import { Position } from './range/position';
 
 export function activate(context: vscode.ExtensionContext) {
 	console.log('"robust-yaml" is now active!');
-	let disposable = vscode.languages.registerHoverProvider('yaml', {
-		provideHover(document, position, token) {
-			return vscode.workspace.findFiles("**/*Component.cs").then((componentFiles) => {
-				let doc = parseDocument(document.getText());
-				let contents: vscode.MarkdownString[] = [];
-				visit(doc, {
-					Map(_, map) {
-						if (map.range) {
-							let start = document.positionAt(map.range[0]);
-							let end = document.positionAt(map.range[2]);
-							if (position.isBefore(start) || position.isAfter(end)) {
-								return visit.SKIP;
-							}
-						}
-						if (map.get('type') === 'entity') {
-							let components = map.get('components');
-							if (isCollection(components)) {
-								visit(components, {
-									Pair(_, pair) {
-										if (isScalar(pair.key) && pair.key.value === 'type' && isScalar(pair.value)) {
-											let componentName = pair.value.toString();
-											contents.push(new vscode.MarkdownString("### " + componentName));
-											let filename = componentFiles.find((v) => v.toString().includes(componentName));
-											if (filename) {
-												let relative = vscode.workspace.asRelativePath(filename).toString();
-												contents.push(new vscode.MarkdownString("* [" + relative + "](" + filename + ")"));
-											} else {
-												contents.push(new vscode.MarkdownString("* NOT FOUND"));
-											}
-										}
-									}
-								});
-							}
-						}
-						return visit.SKIP;
-					}
-				});
-				return {
-					contents: contents
-				};
-			}, (reason) => {
-				return { contents: ["FAILED TO READ SOURCE FILES: " + reason] };
-			});
-		}
-	});
-	context.subscriptions.push(disposable);
-	disposable = vscode.languages.registerDefinitionProvider('yaml', {
+	context.subscriptions.push(vscode.languages.registerDefinitionProvider('yaml', {
 		provideDefinition(document, position, token) {
 			return vscode.workspace.findFiles("**/*Component.cs").then((componentFiles) => {
-				let doc = parseDocument(document.getText());
-				let locations: vscode.Location[] = [];
-				visit(doc, {
-					Map(_, map) {
-						if (map.range) {
-							let start = document.positionAt(map.range[0]);
-							let end = document.positionAt(map.range[2]);
-							if (position.isBefore(start) || position.isAfter(end)) {
-								return visit.SKIP;
-							}
-						}
-						if (map.get('type') === 'entity') {
-							let components = map.get('components');
-							if (isCollection(components)) {
-								visit(components, {
-									Pair(_, pair) {
-										if (isScalar(pair.key) && pair.key.value === 'type' && isScalar(pair.value)) {
-											let componentName = pair.value.toString();
-											let filename = componentFiles.find((v) => v.toString().includes(componentName));
-											if (filename) {
-												locations.push(new vscode.Location(filename, new vscode.Position(0, 0)));
-											}
-										}
-									}
-								});
-							}
-						}
-						return visit.SKIP;
-					}
-				});
+				const locations: vscode.Location[] = [];
+				const component = findComponent(document.getText(), new Position(position.line, position.character));
+				if (component) {
+					componentFiles
+						.filter(uri => uri.toString().includes(component.toString()))
+						.forEach(uri => locations.push(new vscode.Location(uri, new vscode.Position(0, 0))));
+				}
 				return locations;
 			}, _ => {
 				return [];
 			});
 		},
-	});
-	context.subscriptions.push(disposable);
+	}));
 }
 
 export function deactivate() {
