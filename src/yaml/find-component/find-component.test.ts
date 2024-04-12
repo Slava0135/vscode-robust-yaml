@@ -1,7 +1,7 @@
 import assert from "assert";
 import { readFileSync } from "fs";
 import path from "path";
-import { findAllComponents, findComponent } from "./find-component";
+import { findAllComponents, findComponent, isAtComponentType } from "./find-component";
 import { nonZeroBasedPosition } from "../../range/position";
 import { Range } from "../../range/range";
 
@@ -71,6 +71,14 @@ describe('find all components in yaml document', () => {
             ['comp3', new Range(nonZeroBasedPosition(11, 11), nonZeroBasedPosition(11, 15))]
         ]);
         assert.deepStrictEqual(actual, expected);
+    });
+});
+
+describe('is at component type', () => {
+    it('one entity - one component', () => {
+        let source = readSource('one-entity-one-component');
+        assert.ok(isAtComponentType(source,nonZeroBasedPosition(3, 11)));
+        assert.equal(isAtComponentType(source,nonZeroBasedPosition(4, 11)), false);
     });
 });
 
