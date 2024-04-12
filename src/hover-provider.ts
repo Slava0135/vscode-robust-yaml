@@ -20,7 +20,7 @@ export function registerHoverProvider() {
                     if (buf) {
                         const summary = parseSummary(buf.toString(), component.toString());
                         if (summary) {
-                            contents.push(new vscode.MarkdownString("```\n" + summary + "```"));
+                            contents.push(new vscode.MarkdownString("```\n" + summary + "\n```"));
                         }
                     }
                     return {
