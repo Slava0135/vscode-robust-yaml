@@ -37,5 +37,19 @@ export class Position {
 }
 
 export function nonZeroBasedPosition(line: number, character: number): Position {
-    return new Position(line, character);
+    return new Position(line-1, character-1);
+}
+
+export function positionFromOffset(source: string, offset: number): Position | undefined {
+    let currentOffset = 0;
+    const lines = source.split('\n');
+    for (let lineN = 0; lineN < lines.length; lineN++) {
+        const line = lines[lineN];
+        const chars = line.length + 1;
+        if (currentOffset + chars >= offset) {
+            return new Position(lineN, offset - currentOffset);
+        }
+        currentOffset += chars;
+    }
+    return;
 }
