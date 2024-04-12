@@ -1,14 +1,40 @@
 {
   "name": "robust-yaml",
   "displayName": "Robust YAML",
+  "author": {
+    "name": "slava0135",
+    "url": "https://github.com/Slava0135"
+  },
+  "license": "MIT",
   "description": "Extended YAML support for Robust Toolbox",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.88.0"
   },
+  "icon": "showcase/icon.png",
+  "galleryBanner": {
+    "color": "#001433",
+    "theme": "dark"
+  },
   "categories": [
+    "Programming Languages",
     "Other"
   ],
+  "keywords": [
+    "YAML",
+    "C#",
+    "Game Development",
+    "Robust Toolbox",
+    "Space Station 14"
+  ],
+  "bugs": {
+    "url": "https://github.com/Slava0135/vscode-robust-yaml/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Slava0135/vscode-robust-yaml.git"
+  },
+  "homepage": "https://github.com/Slava0135/vscode-robust-yaml/blob/master/README.md",
   "activationEvents": [
     "onLanguage:yaml"
   ],
