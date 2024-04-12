@@ -16,7 +16,13 @@
   "contributes": {
     "capabilities": {
       "hoverProvider": "true",
-      "definitionProvider": "true"
+      "definitionProvider": "true",
+      "documentSemanticTokensProvider": "true"
+    }
+  },
+  "configurationDefaults": {
+    "yaml": {
+      "editor.semanticHighlighting.enabled": true
     }
   },
   "scripts": {
