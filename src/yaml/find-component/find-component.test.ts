@@ -3,6 +3,7 @@ import { readFileSync } from "fs";
 import path from "path";
 import { findAllComponents, findComponent } from "./find-component";
 import { nonZeroBasedPosition } from "../../range/position";
+import { Range } from "../../range/range";
 
 describe('find component in yaml document', () => {
 
@@ -55,6 +56,22 @@ describe('find component in yaml document', () => {
         assert.equal(comp3.toString(), 'comp3');
     });
 
+});
+
+describe('find all components in yaml document', () => {
+    it('one entity - many components', () => {
+        let source = readSource('one-entity-many-components');
+        const components = findAllComponents(source).entries();
+        const actual = new Map(Array.from(components, ([k, v]) => { 
+            return [k.toString(), v]; 
+        }));
+        const expected = new Map([ 
+            ['comp1', new Range(nonZeroBasedPosition(3, 11), nonZeroBasedPosition(3, 15))],
+            ['comp2', new Range(nonZeroBasedPosition(7, 11), nonZeroBasedPosition(7, 15))],
+            ['comp3', new Range(nonZeroBasedPosition(11, 11), nonZeroBasedPosition(11, 15))]
+        ]);
+        assert.deepStrictEqual(actual, expected);
+    });
 });
 
 function readSource(name: string): string {
