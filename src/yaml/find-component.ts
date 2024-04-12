@@ -1,5 +1,5 @@
 import { Document, Scalar, isCollection, isScalar, visit } from "yaml";
-import { Position } from "../position/position";
+import { Position } from "../range/position";
 
 export function findComponent(doc: Document, pos: Position): Scalar | undefined {
     let component: Scalar | undefined;
