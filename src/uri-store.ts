@@ -33,7 +33,9 @@ function addUris(uris: readonly vscode.Uri[]) {
     if (uris.length === 1) {
         logger.debug(uris.toString());
     }
+    let old = componentUris.size;
     uris.forEach(it => componentUris.add(it));
+    logger.debug(`store size is ${componentUris.size} (was ${old})`);
 };
 
 function remUris(uris: readonly vscode.Uri[]) {
@@ -41,5 +43,7 @@ function remUris(uris: readonly vscode.Uri[]) {
     if (uris.length === 1) {
         logger.debug(uris.toString());
     }
+    let old = componentUris.size;
     uris.forEach(it => componentUris.delete(it));
+    logger.debug(`store size is ${componentUris.size} (was ${old})`);
 }
