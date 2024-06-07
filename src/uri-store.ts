@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { logger } from "./logging";
 
 export const componentUris: Set<vscode.Uri> = new Set();
 
@@ -9,13 +10,16 @@ export function init(): vscode.Disposable[] {
 
     vscode.workspace.findFiles("**/*Component.cs").then(addUris);
 
-    disposables.push(vscode.workspace.onDidCreateFiles(event =>
+    disposables.push(vscode.workspace.onDidCreateFiles(event => {
         event.files
             .filter(it => componentRegex.test(it.toString()))
-            .forEach(it => componentUris.add(it))
-    ));
+            .forEach(it => componentUris.add(it));
+    }));
 
-    disposables.push(vscode.workspace.onDidDeleteFiles(event => remUris(event.files)));
+    disposables.push(vscode.workspace.onDidDeleteFiles(event => {
+        remUris(event.files);
+    }));
+
     disposables.push(vscode.workspace.onDidRenameFiles(event => {
         remUris(event.files.map(it => it.oldUri));
         addUris(event.files.map(it => it.newUri));
@@ -25,9 +29,17 @@ export function init(): vscode.Disposable[] {
 }
 
 function addUris(uris: readonly vscode.Uri[]) {
+    logger.debug(`adding ${uris.length} uris to store`);
+    if (uris.length === 1) {
+        logger.debug(uris.toString());
+    }
     uris.forEach(it => componentUris.add(it));
 };
 
 function remUris(uris: readonly vscode.Uri[]) {
+    logger.debug(`removing ${uris.length} uris from store`);
+    if (uris.length === 1) {
+        logger.debug(uris.toString());
+    }
     uris.forEach(it => componentUris.delete(it));
 }

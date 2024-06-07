@@ -4,10 +4,12 @@ import { Position } from './range/position';
 import { containsComponentDefinition } from './file/uri';
 import { parseSummary } from './parse/summary';
 import { componentUris } from './uri-store';
+import { logger } from './logging';
 
 export function registerHoverProvider() {
     return vscode.languages.registerHoverProvider('yaml', {
         provideHover(document, position, _token) {
+            logger.debug(`providing hover in ${document.uri.toString()} at ${position.line}:${position.character}`);
             const contents: vscode.MarkdownString[] = [];
             const component = findComponent(document.getText(), new Position(position.line, position.character));
             if (component) {
