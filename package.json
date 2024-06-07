@@ -46,6 +46,22 @@
       "definitionProvider": true,
       "documentSemanticTokensProvider": true,
       "completionItemProvider": true
+    },
+    "configuration": {
+      "title": "Robust YAML",
+      "properties": {
+        "Robust YAML.logger.loggingLevel": {
+          "type": "string",
+          "default": "Info",
+          "enum": [
+            "Error",
+            "Warn",
+            "Info",
+            "Debug"
+          ],
+          "description": "Specifies logging level."
+        }
+      }
     }
   },
   "configurationDefaults": {
@@ -79,6 +95,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
+    "winston": "^3.13.0",
     "yaml": "^2.4.1"
   }
 }
