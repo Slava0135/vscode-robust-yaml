@@ -7,7 +7,7 @@ const defaultTransport = new winston.transports.Console();
 
 export const logger: winston.Logger = winston.createLogger({
     level: level,
-    format: winston.format.combine (
+    format: winston.format.combine(
         winston.format.timestamp({
             format: "HH:mm:ss",
         }),

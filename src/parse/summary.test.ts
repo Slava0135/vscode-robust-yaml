@@ -8,7 +8,7 @@ describe('parse summary', () => {
     it('one component', () => {
         const source = readSource('one-component');
         assert.equal(
-            parseSummary(source, 'MeleeWeapon'), 
+            parseSummary(source, 'MeleeWeapon'),
             "When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks."
         );
         assert.equal(parseSummary(source, 'Unknown'), undefined);

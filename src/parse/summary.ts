@@ -24,6 +24,6 @@ export function parseSummary(source: string, component: string): string | undefi
         }
     }
     if (summaryStartIndex > 0 && summaryEndIndex > 0) {
-        return lines.slice(summaryStartIndex+1, summaryEndIndex).map(it => it.replace(/^\s*\/\/\/\s*/, '').replace(/\s*$/, '')).join('\n');
+        return lines.slice(summaryStartIndex + 1, summaryEndIndex).map(it => it.replace(/^\s*\/\/\/\s*/, '').replace(/\s*$/, '')).join('\n');
     }
 }

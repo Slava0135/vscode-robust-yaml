@@ -7,7 +7,7 @@ import { componentUris } from './uri-store';
 
 export function registerHoverProvider() {
     return vscode.languages.registerHoverProvider('yaml', {
-        provideHover(document, position, token) {
+        provideHover(document, position, _token) {
             const contents: vscode.MarkdownString[] = [];
             const component = findComponent(document.getText(), new Position(position.line, position.character));
             if (component) {

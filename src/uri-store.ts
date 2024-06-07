@@ -20,7 +20,7 @@ export function init(): vscode.Disposable[] {
         remUris(event.files.map(it => it.oldUri));
         addUris(event.files.map(it => it.newUri));
     }));
-    
+
     return disposables;
 }
 

@@ -5,8 +5,8 @@ import { containsComponentDefinition } from './file/uri';
 import { componentUris } from './uri-store';
 
 export function registerDefinitionProvider(): vscode.Disposable {
-    return vscode.languages.registerDefinitionProvider('yaml', {
-		provideDefinition(document, position, token) {
+	return vscode.languages.registerDefinitionProvider('yaml', {
+		provideDefinition(document, position, _token) {
 			const locations: vscode.Location[] = [];
 			const component = findComponent(document.getText(), new Position(position.line, position.character));
 			if (component) {

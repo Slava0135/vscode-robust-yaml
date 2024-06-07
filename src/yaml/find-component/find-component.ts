@@ -7,7 +7,7 @@ export function findComponent(source: string, pos: Position): Scalar | undefined
     visitComponents(source, type => {
         if (type.range) {
             const start = positionFromOffset(source, type.range[0]);
-            const end = positionFromOffset(source, type.range[1]-1);
+            const end = positionFromOffset(source, type.range[1] - 1);
             if (start && end && new Range(start, end).contains(pos)) {
                 component = type;
                 return visit.BREAK;
@@ -22,7 +22,7 @@ export function findAllComponents(source: string): Map<Scalar, Range> {
     visitComponents(source, type => {
         if (type.range) {
             const start = positionFromOffset(source, type.range[0]);
-            const end = positionFromOffset(source, type.range[1]-1);
+            const end = positionFromOffset(source, type.range[1] - 1);
             if (start && end) {
                 const range = new Range(start, end);
                 res.set(type, range);
