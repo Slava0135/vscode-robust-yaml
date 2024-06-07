@@ -22,7 +22,7 @@ export function init(): vscode.Disposable[] {
 
     disposables.push(vscode.workspace.onDidRenameFiles(event => {
         remUris(event.files.map(it => it.oldUri));
-        addUris(event.files.map(it => it.newUri));
+        addUris(event.files.map(it => it.newUri).filter(it => componentRegex.test(it.toString())));
     }));
 
     return disposables;
