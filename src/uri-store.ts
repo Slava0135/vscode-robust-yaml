@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { logger } from "./logging";
 
-export const componentUris: Set<vscode.Uri> = new Set();
+export const componentUris: Set<string> = new Set();
 
 export function init(): vscode.Disposable[] {
 
@@ -12,8 +12,8 @@ export function init(): vscode.Disposable[] {
 
     disposables.push(vscode.workspace.onDidCreateFiles(event => {
         event.files
-            .filter(it => componentRegex.test(it.toString()))
-            .forEach(it => componentUris.add(it));
+            .filter(it => componentRegex.test(it.fsPath))
+            .forEach(it => componentUris.add(it.fsPath));
     }));
 
     disposables.push(vscode.workspace.onDidDeleteFiles(event => {
@@ -34,7 +34,7 @@ function addUris(uris: readonly vscode.Uri[]) {
         logger.debug(uris.toString());
     }
     let old = componentUris.size;
-    uris.forEach(it => componentUris.add(it));
+    uris.forEach(it => componentUris.add(it.fsPath));
     logger.debug(`store size is ${componentUris.size} (was ${old})`);
 };
 
@@ -44,6 +44,6 @@ function remUris(uris: readonly vscode.Uri[]) {
         logger.debug(uris.toString());
     }
     let old = componentUris.size;
-    uris.forEach(it => componentUris.delete(it));
+    uris.forEach(it => componentUris.delete(it.fsPath));
     logger.debug(`store size is ${componentUris.size} (was ${old})`);
 }

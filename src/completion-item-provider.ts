@@ -14,7 +14,7 @@ export function registreCompletionItemProvider(): vscode.Disposable {
 			}
 			const componentNameRegex = RegExp(/.*\/([a-zA-Z_]+)Component[.]cs/);
 			componentUris.forEach(uri => {
-				const match = uri.toString().match(componentNameRegex);
+				const match = uri.match(componentNameRegex);
 				if (match) {
 					const item = {
 						label: match[1],

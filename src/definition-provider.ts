@@ -13,8 +13,8 @@ export function registerDefinitionProvider(): vscode.Disposable {
 			const component = findComponent(document.getText(), new Position(position.line, position.character));
 			if (component) {
 				Array.from(componentUris)
-					.filter(uri => containsComponentDefinition(uri.toString(), component.toString()))
-					.forEach(uri => locations.push(new vscode.Location(uri, new vscode.Position(0, 0))));
+					.filter(uri => containsComponentDefinition(uri, component.toString()))
+					.forEach(uri => locations.push(new vscode.Location(vscode.Uri.file(uri), new vscode.Position(0, 0))));
 			}
 			return locations;
 		}
