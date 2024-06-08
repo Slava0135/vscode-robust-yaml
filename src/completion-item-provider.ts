@@ -30,9 +30,7 @@ export function registerCompletionItemProvider(): vscode.Disposable {
 			} else if (isAtComponentField(document.getText(), pos)) {
 				logger.debug(`finding items for component field...`);
 				const componentName = findComponentByField(document.getText(), pos)!!;
-				const componentUris = getComponentUris().filter(uri => {
-					containsComponentDefinition(uri.toString(), componentName);
-				});
+				const componentUris = getComponentUris().filter(uri => containsComponentDefinition(uri.toString(), componentName));
 				logger.debug(`found ${componentUris.length} candidate components`);
 				if (componentUris.length === 1) {
 					let uri = componentUris[0];
@@ -42,7 +40,7 @@ export function registerCompletionItemProvider(): vscode.Disposable {
                         if (buf) {
 							parseDataFields(buf.toString()).forEach(field => {
 								const item = {
-									label: field,
+									label: `${field}: `,
 								};
 								list.push(new vscode.CompletionItem(item, vscode.CompletionItemKind.Field));
 							});
