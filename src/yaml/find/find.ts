@@ -38,7 +38,8 @@ export function isAtComponentType(source: string, pos: Position): boolean {
     visitComponents(source, type => {
         if (type.range) {
             const start = positionFromOffset(source, type.range[0]);
-            if (start && start.line === pos.line) {
+            const end = positionFromOffset(source, type.range[1]);
+            if (start?.isBeforeOrEquals(pos) && end?.isAfterOrEquals(pos)) {
                 ret = true;
                 return visit.BREAK;
             }
@@ -58,7 +59,7 @@ export function isAtComponentField(source: string, pos: Position): boolean {
             if (isScalar(key) && key.range) {
                 const start = positionFromOffset(source, key.range[0]);
                 const end = positionFromOffset(source, key.range[1]);
-                if (start?.isBeforeOrEquals(pos) && end?.isAfter(pos)) {
+                if (start?.isBeforeOrEquals(pos) && end?.isAfterOrEquals(pos)) {
                     ret = true;
                 }
             }

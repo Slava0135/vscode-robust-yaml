@@ -78,6 +78,9 @@ describe('is at component type', () => {
     it('one entity - one component', () => {
         let source = readSource('one-entity-one-component');
         assert.ok(isAtComponentType(source,nonZeroBasedPosition(3, 11)));
+        assert.ok(isAtComponentType(source,nonZeroBasedPosition(3, 15)));
+        assert.equal(isAtComponentType(source,nonZeroBasedPosition(3, 10)), false);
+        assert.equal(isAtComponentType(source,nonZeroBasedPosition(3, 16)), false);
         assert.equal(isAtComponentType(source,nonZeroBasedPosition(4, 11)), false);
     });
 });
@@ -86,7 +89,10 @@ describe('is at component field', () => {
     it('one entity - one component', () => {
         let source = readSource('one-entity-one-component');
         assert.ok(isAtComponentField(source,nonZeroBasedPosition(4, 5)));
-        assert.equal(isAtComponentField(source,nonZeroBasedPosition(4, 11)), false);
+        assert.ok(isAtComponentField(source,nonZeroBasedPosition(4, 9)));
+        assert.equal(isAtComponentField(source,nonZeroBasedPosition(4, 4)), false);
+        assert.equal(isAtComponentField(source,nonZeroBasedPosition(4, 10)), false);
+        assert.equal(isAtComponentField(source,nonZeroBasedPosition(5, 11)), false);
     });
 });
 
