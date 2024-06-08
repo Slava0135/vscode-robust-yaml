@@ -33,6 +33,25 @@ export function findAllComponents(source: string): Map<Scalar, Range> {
     return res;
 }
 
+export function findAllFields(source: string): Map<Scalar, Range> {
+    const res = new Map<Scalar, Range>;
+    visitComponents(source, (_type, map) => {
+        map.items.forEach(it => {
+            let key = it.key;
+            if (isScalar(key) && key.toString() !== 'type' && key.range) {
+                const start = positionFromOffset(source, key.range[0]);
+                const end = positionFromOffset(source, key.range[1]);
+                if (start && end) {
+                    const range = new Range(start, end);
+                    res.set(key, range);
+                }
+            }
+        });
+        return undefined;
+    });
+    return res;
+}
+
 export function isAtComponentType(source: string, pos: Position): boolean {
     let ret = false;
     visitComponents(source, type => {

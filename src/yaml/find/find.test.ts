@@ -1,7 +1,7 @@
 import assert from "assert";
 import { readFileSync } from "fs";
 import path from "path";
-import { findAllComponents, findComponent, isAtComponentField, isAtComponentType } from "./find";
+import { findAllComponents, findAllFields, findComponent, isAtComponentField, isAtComponentType } from "./find";
 import { nonZeroBasedPosition } from "../../range/position";
 import { Range } from "../../range/range";
 
@@ -70,7 +70,29 @@ describe('find all components in yaml document', () => {
             ['comp2', new Range(nonZeroBasedPosition(7, 11), nonZeroBasedPosition(7, 15))],
             ['comp3', new Range(nonZeroBasedPosition(11, 11), nonZeroBasedPosition(11, 15))]
         ]);
-        assert.deepStrictEqual(actual, expected);
+        assert.deepEqual(actual, expected);
+    });
+});
+
+describe('find all fields in yaml document', () => {
+    it('one entity - many components', () => {
+        let source = readSource('one-entity-many-components');
+        const components = findAllFields(source).entries();
+        const actual = new Map(Array.from(components, ([k, v]) => { 
+            return [k.toString(), v]; 
+        }));
+        const expected = new Map([ 
+            ['key1', new Range(nonZeroBasedPosition(4, 5), nonZeroBasedPosition(4, 9))],
+            ['key2', new Range(nonZeroBasedPosition(5, 5), nonZeroBasedPosition(5, 9))],
+            ['key3', new Range(nonZeroBasedPosition(6, 5), nonZeroBasedPosition(6, 9))],
+            ['key1', new Range(nonZeroBasedPosition(8, 5), nonZeroBasedPosition(8, 9))],
+            ['key2', new Range(nonZeroBasedPosition(9, 5), nonZeroBasedPosition(9, 9))],
+            ['key3', new Range(nonZeroBasedPosition(10, 5), nonZeroBasedPosition(10, 9))],
+            ['key1', new Range(nonZeroBasedPosition(12, 5), nonZeroBasedPosition(12, 9))],
+            ['key2', new Range(nonZeroBasedPosition(13, 5), nonZeroBasedPosition(13, 9))],
+            ['key3', new Range(nonZeroBasedPosition(14, 5), nonZeroBasedPosition(14, 9))]
+        ]);
+        assert.deepEqual(actual, expected);
     });
 });
 
