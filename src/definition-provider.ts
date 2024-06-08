@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { findComponent } from './yaml/find-component/find-component';
 import { Position } from './range/position';
-import { containsComponentDefinition } from './file/uri';
+import { containsComponentDefinition } from './file/path';
 import { componentUris } from './uri-store';
 import { logger } from './logging';
 
