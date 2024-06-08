@@ -2,7 +2,11 @@ import * as vscode from "vscode";
 import { logger } from "./logging";
 import { minimatch } from "minimatch";
 
-export const componentUris: Set<string> = new Set();
+const componentUris: Set<string> = new Set();
+
+export function getComponentUris(): vscode.Uri[] {
+    return Array.from(componentUris).map(it => vscode.Uri.file(it));
+}
 
 export function init(): vscode.Disposable[] {
 

@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import { isAtComponentType } from './yaml/find-component/find-component';
 import { Position } from './range/position';
-import { componentUris } from './uri-store';
+import { getComponentUris } from './uri-store';
 import { logger } from './logging';
 
 export function registerCompletionItemProvider(): vscode.Disposable {
@@ -13,8 +13,8 @@ export function registerCompletionItemProvider(): vscode.Disposable {
 				return list;
 			}
 			const componentNameRegex = RegExp(/.*\/([a-zA-Z_]+)Component[.]cs/);
-			componentUris.forEach(uri => {
-				const match = uri.match(componentNameRegex);
+			getComponentUris().forEach(uri => {
+				const match = uri.toString().match(componentNameRegex);
 				if (match) {
 					const item = {
 						label: match[1],
