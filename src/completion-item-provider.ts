@@ -4,7 +4,7 @@ import { Position } from './range/position';
 import { componentUris } from './uri-store';
 import { logger } from './logging';
 
-export function registreCompletionItemProvider(): vscode.Disposable {
+export function registerCompletionItemProvider(): vscode.Disposable {
 	return vscode.languages.registerCompletionItemProvider('yaml', {
 		provideCompletionItems(document, position, _token, _context) {
 			logger.debug(`providing completion items in ${document.uri.toString()} at ${position.line}:${position.character}`);

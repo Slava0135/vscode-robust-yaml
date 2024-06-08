@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { registerDefinitionProvider } from './definition-provider';
 import { registerDocumentSemanticTokensProvider } from './document-semantic-tokens-provider';
 import { registerHoverProvider } from './hover-provider';
-import { registreCompletionItemProvider } from './completion-item-provider';
+import { registerCompletionItemProvider } from './completion-item-provider';
 import * as uristore from './uri-store';
 import { logger } from './logging';
 import * as logging from './logging';
@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(registerDefinitionProvider());
 	context.subscriptions.push(registerDocumentSemanticTokensProvider());
 	context.subscriptions.push(registerHoverProvider());
-	context.subscriptions.push(registreCompletionItemProvider());
+	context.subscriptions.push(registerCompletionItemProvider());
 	logger.info("extension activated!");
 }
 
