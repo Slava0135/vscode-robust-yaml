@@ -1,18 +1,19 @@
 import * as vscode from "vscode";
 import { logger } from "./logging";
+import { minimatch } from "minimatch";
 
 export const componentUris: Set<string> = new Set();
 
 export function init(): vscode.Disposable[] {
 
-    const componentRegex = new RegExp(/.*Component[.]cs/);
+    const componentPattern = '**/*Component.cs';
     const disposables: vscode.Disposable[] = [];
 
-    vscode.workspace.findFiles("**/*Component.cs").then(addUris);
+    vscode.workspace.findFiles(componentPattern).then(addUris);
 
     disposables.push(vscode.workspace.onDidCreateFiles(event => {
         event.files
-            .filter(it => componentRegex.test(it.fsPath))
+            .filter(it => minimatch(it.fsPath, componentPattern))
             .forEach(it => componentUris.add(it.fsPath));
     }));
 
@@ -22,7 +23,7 @@ export function init(): vscode.Disposable[] {
 
     disposables.push(vscode.workspace.onDidRenameFiles(event => {
         remUris(event.files.map(it => it.oldUri));
-        addUris(event.files.map(it => it.newUri).filter(it => componentRegex.test(it.toString())));
+        addUris(event.files.map(it => it.newUri).filter(it => minimatch(it.fsPath, componentPattern)));
     }));
 
     return disposables;
