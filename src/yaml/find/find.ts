@@ -1,4 +1,4 @@
-import { Scalar, isCollection, isScalar, parseDocument, visit } from "yaml";
+import { Scalar, YAMLMap, isCollection, isScalar, parseDocument, visit } from "yaml";
 import { Position, positionFromOffset } from "../../range/position";
 import { Range } from "../../range/range";
 
@@ -47,7 +47,30 @@ export function isAtComponentType(source: string, pos: Position): boolean {
     return ret;
 }
 
-function visitComponents(source: string, callback: (type: Scalar) => symbol | undefined) {
+export function isAtComponentField(source: string, pos: Position): boolean {
+    if (isAtComponentType(source, pos)) {
+        return false;
+    }
+    let ret = false;
+    visitComponents(source, (_type, map) => {
+        map.items.forEach(it => {
+            let key = it.key;
+            if (isScalar(key) && key.range) {
+                const start = positionFromOffset(source, key.range[0]);
+                const end = positionFromOffset(source, key.range[1]);
+                if (start?.isBeforeOrEquals(pos) && end?.isAfter(pos)) {
+                    ret = true;
+                }
+            }
+        });
+        if (ret) {
+            return visit.BREAK;
+        }
+    });
+    return ret;
+}
+
+function visitComponents(source: string, callback: (type: Scalar, fields: YAMLMap) => symbol | undefined) {
     const doc = parseDocument(source);
     visit(doc, {
         Map(_, map) {
@@ -62,7 +85,7 @@ function visitComponents(source: string, callback: (type: Scalar) => symbol | un
                     Map(_, map) {
                         const type = map.get('type', true);
                         if (isScalar(type)) {
-                            visitRes = callback(type);
+                            visitRes = callback(type, map);
                         }
                     }
                 });

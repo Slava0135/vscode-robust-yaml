@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { findComponent } from './yaml/find-component/find-component';
+import { findComponent } from './yaml/find/find';
 import { Position } from './range/position';
 import { containsComponentDefinition } from './file/path';
 import { parseSummary } from './parse/summary';

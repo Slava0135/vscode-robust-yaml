@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { isAtComponentType } from './yaml/find-component/find-component';
+import { isAtComponentType } from './yaml/find/find';
 import { Position } from './range/position';
 import { getComponentUris } from './uri-store';
 import { logger } from './logging';

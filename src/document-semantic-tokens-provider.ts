@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { findAllComponents } from './yaml/find-component/find-component';
+import { findAllComponents } from './yaml/find/find';
 import { logger } from './logging';
 
 const tokenTypes: string[] = ['type'];

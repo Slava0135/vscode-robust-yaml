@@ -1,7 +1,7 @@
 import assert from "assert";
 import { readFileSync } from "fs";
 import path from "path";
-import { findAllComponents, findComponent, isAtComponentType } from "./find-component";
+import { findAllComponents, findComponent, isAtComponentField, isAtComponentType } from "./find";
 import { nonZeroBasedPosition } from "../../range/position";
 import { Range } from "../../range/range";
 
@@ -79,6 +79,14 @@ describe('is at component type', () => {
         let source = readSource('one-entity-one-component');
         assert.ok(isAtComponentType(source,nonZeroBasedPosition(3, 11)));
         assert.equal(isAtComponentType(source,nonZeroBasedPosition(4, 11)), false);
+    });
+});
+
+describe('is at component field', () => {
+    it('one entity - one component', () => {
+        let source = readSource('one-entity-one-component');
+        assert.ok(isAtComponentField(source,nonZeroBasedPosition(4, 5)));
+        assert.equal(isAtComponentField(source,nonZeroBasedPosition(4, 11)), false);
     });
 });
 
