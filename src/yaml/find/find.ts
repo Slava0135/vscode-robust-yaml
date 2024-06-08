@@ -71,6 +71,21 @@ export function isAtComponentField(source: string, pos: Position): boolean {
     return ret;
 }
 
+export function findComponentByField(source: string, pos: Position): string | undefined {
+    let ret: string | undefined;
+    visitComponents(source, (type, map) => {
+        if (map.range) {
+            const start = positionFromOffset(source, map.range[0]);
+            const end = positionFromOffset(source, map.range[1]);
+            if (start && end && new Range(start, end).contains(pos)) {
+                ret = type.toString();
+                return visit.BREAK;
+            }
+        }
+    });
+    return ret;
+}
+
 function visitComponents(source: string, callback: (type: Scalar, fields: YAMLMap) => symbol | undefined) {
     const doc = parseDocument(source);
     visit(doc, {
