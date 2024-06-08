@@ -34,7 +34,7 @@ export function registerCompletionItemProvider(): vscode.Disposable {
 				logger.debug(`found ${componentUris.length} candidate components`);
 				if (componentUris.length === 1) {
 					let uri = componentUris[0];
-					logger.debug(`found component type at ${uri.fsPath}`);
+					logger.debug(`found component type at ${uri.toString()}`);
 					return vscode.workspace.fs.readFile(uri).then(buf => {
 						const list: vscode.CompletionItem[] = [];
                         if (buf) {
