@@ -10,6 +10,11 @@ describe('parse datafields', () => {
         assert.deepEqual(parseDataFields(source), ['handle']);
     });
 
+    it('one inferred datafield', () => {
+        const source = readSource('one-inferred-datafield');
+        assert.deepEqual(parseDataFields(source), ['altDisarm']);
+    });
+
 });
 
 function readSource(name: string): string {
