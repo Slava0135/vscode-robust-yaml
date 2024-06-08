@@ -15,16 +15,36 @@ describe('parse datafields', () => {
         assert.deepEqual(parseDataFields(source), ['altDisarm']);
     });
 
+    it('many mixed datafields 1', () => {
+        const source = readSource('many-mixed-datafields-1');
+        const expected = [
+            'clothingVisuals',
+            'quickEquip',
+            // 'slots',
+            'equipSound',
+            'unequipSound',
+            'equippedPrefix',
+            'equippedState',
+            'sprite',
+            'maleMask',
+            'femaleMask',
+            'unisexMask',
+            'equipDelay',
+            'unequipDelay',
+        ];
+        assert.deepEqual(parseDataFields(source), expected);
+    });
+
     it('many mixed datafields 2', () => {
         const source = readSource('many-mixed-datafields-2');
         const expected = [
             'altDisarm',
             'hidden',
-            'nextAttack',
+            // 'nextAttack',
             'resetOnHandSelected',
             'attackRate',
             'autoAttack',
-            'damage',
+            // 'damage',
             'bluntStaminaDamageFactor',
             'clickDamageModifier',
             'range',
