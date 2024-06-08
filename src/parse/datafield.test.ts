@@ -15,6 +15,31 @@ describe('parse datafields', () => {
         assert.deepEqual(parseDataFields(source), ['altDisarm']);
     });
 
+    it('many mixed datafields 2', () => {
+        const source = readSource('many-mixed-datafields-2');
+        const expected = [
+            'altDisarm',
+            'hidden',
+            'nextAttack',
+            'resetOnHandSelected',
+            'attackRate',
+            'autoAttack',
+            'damage',
+            'bluntStaminaDamageFactor',
+            'clickDamageModifier',
+            'range',
+            'angle',
+            'animation',
+            'wideAnimation',
+            'wideAnimationRotation',
+            'swingLeft',
+            'soundSwing',
+            'soundHit',
+            'soundNoDamage',
+        ];
+        assert.deepEqual(parseDataFields(source), expected);
+    });
+
 });
 
 function readSource(name: string): string {
