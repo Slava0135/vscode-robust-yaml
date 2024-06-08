@@ -33,7 +33,7 @@ describe('parse summary', () => {
 });
 
 function readSource(name: string): string {
-    const p = path.resolve(__dirname, `./test-resources/${name}.cs`);
+    const p = path.resolve(__dirname, `./test-resources/summary/${name}.cs`);
     return readFileSync(p).toString();
 }
 
