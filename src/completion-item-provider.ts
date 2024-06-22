@@ -40,7 +40,8 @@ export function registerCompletionItemProvider(): vscode.Disposable {
                         if (buf) {
 							parseDataFields(buf.toString()).forEach(field => {
 								const item = {
-									label: `${field}: `,
+									label: `${field.name}: `,
+									detail: `${field.type ?? ''}`
 								};
 								list.push(new vscode.CompletionItem(item, vscode.CompletionItemKind.Field));
 							});
