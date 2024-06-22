@@ -60,6 +60,11 @@ describe('parse datafields', () => {
         assert.deepEqual(parseDataFields(source), ['altDisarm']);
     });
 
+    it('one inferred datafield with get and set', () => {
+        const source = readSource('one-inferred-datafield-multiline');
+        assert.deepEqual(parseDataFields(source), ['altDisarm']);
+    });
+
     it('many mixed datafields 1', () => {
         const source = readSource('many-mixed-datafields-1');
         const expected = [

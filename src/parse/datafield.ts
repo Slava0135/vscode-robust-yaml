@@ -3,7 +3,7 @@ export function parseDataFields(source: string): string[] {
     const lines = source.split('\n');
     const inferredDataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\((.*)(,.*)*\))?(\s*,.+)*\].*/);
     const dataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\("(.*)"(,.*)*\))(\s*,.+)*\].*/);
-    const fieldPattern = new RegExp(/\s*(public|internal|private|protected)[^;=]*\s+(\w+)\s*(=.+)?;\s*/);
+    const fieldPattern = new RegExp(/\s*(public|internal|private|protected|readonly)[^;={]*\s+([A-Za-z0-9_-]+)\s*(=|;|\{).*/);
     let i = 0;
     while (i < lines.length) {
         let match = lines[i].match(dataFieldPattern);
