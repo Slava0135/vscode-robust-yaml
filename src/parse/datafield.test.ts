@@ -55,7 +55,7 @@ describe('parse datafields', () => {
         const expected = [
             'clothingVisuals',
             'quickEquip',
-            // 'slots',
+            'slots',
             'equipSound',
             'unequipSound',
             'equippedPrefix',
