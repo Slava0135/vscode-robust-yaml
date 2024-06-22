@@ -15,10 +15,10 @@ Extended YAML support for [Robust Toolbox](https://github.com/space-wizards/Robu
 
 ## Requirements
 
-> This extension does **NOT** provide base yaml support, search other extensions (for example [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)).
+> This extension **does NOT provide base YAML support**, search other extensions (for example [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)).
 
 > C# extension is not required.
 
 ## Showcase
 
-https://github.com/Slava0135/vscode-robust-yaml/assets/40753025/3328d59c-2703-463b-a644-26e19de03f8d
+https://github.com/Slava0135/vscode-robust-yaml/assets/40753025/78e7c786-f587-4203-bad8-e806167bba23
