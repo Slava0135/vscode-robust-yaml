@@ -45,6 +45,11 @@ describe('parse datafields', () => {
         assert.deepEqual(parseDataFields(source), ['altDisarm']);
     });
 
+    it('one inferred datafield with options', () => {
+        const source = readSource('one-inferred-datafield-options');
+        assert.deepEqual(parseDataFields(source), ['altDisarm']);
+    });
+
     it('one inferred datafield on same line', () => {
         const source = readSource('one-inferred-datafield-other');
         assert.deepEqual(parseDataFields(source), ['altDisarm']);

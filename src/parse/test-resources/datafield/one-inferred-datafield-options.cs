@@ -13,6 +13,6 @@ public sealed partial class MeleeWeaponComponent : Component
     /// <summary>
     /// Does this entity do a disarm on alt attack.
     /// </summary>
-    [DataField]
+    [DataField(required: true)]
     public bool AltDisarm = true;
 }
