@@ -85,11 +85,11 @@ describe('parse datafields', () => {
         const expected = [
             'altDisarm',
             'hidden',
-            // 'nextAttack',
+            'nextAttack',
             'resetOnHandSelected',
             'attackRate',
             'autoAttack',
-            // 'damage',
+            'damage',
             'bluntStaminaDamageFactor',
             'clickDamageModifier',
             'range',
