@@ -9,8 +9,9 @@ Extended YAML support for [Robust Toolbox](https://github.com/space-wizards/Robu
 * Only entity prototypes and components are supported
   * Go to component definition
   * Show component summary when hovering over it
-  * Component autocompletion
   * Highlighting of components
+  * Component autocompletion
+  * Component fields autocompletion
 
 ## Requirements
 
