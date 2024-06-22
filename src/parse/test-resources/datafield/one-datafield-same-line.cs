@@ -17,5 +17,5 @@ public sealed partial class EmitSoundOnUseComponent : BaseEmitSoundComponent
     ///     otherwise this might enable sound spamming, as use-delays are only initiated if the interaction was
     ///     handled.
     /// </remarks>
-    [DataField("handle")] public bool Handle = true;
+    [DataField("handle")] public bool Handled = true;
 }

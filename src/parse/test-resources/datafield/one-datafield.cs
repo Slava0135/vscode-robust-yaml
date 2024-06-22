@@ -18,5 +18,5 @@ public sealed partial class EmitSoundOnUseComponent : BaseEmitSoundComponent
     ///     handled.
     /// </remarks>
     [DataField("handle")]
-    public bool Handle = true;
+    public bool Handled = true;
 }
