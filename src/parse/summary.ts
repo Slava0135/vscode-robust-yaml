@@ -23,15 +23,23 @@ export function parseDatafieldSummary(source: string, datafield: string): string
         return;
     }
     const lines = source.split('\n');
-    return parseSummaryAt(lines, df.line-1);
+    const line = df.line-1;
+    let until = 0;
+    for (let i = line-1; i >= 0; i--) {
+        if (lines[i].trimEnd().endsWith(';')) {
+            until = i;
+            break;
+        }
+    }
+    return parseSummaryAt(lines, line, until);
 }
 
-function parseSummaryAt(lines: string[], pos: number): string | undefined {
+function parseSummaryAt(lines: string[], pos: number, until: number = 0): string | undefined {
     let summaryStartIndex = -1;
     let summaryEndIndex = -1;
     const summaryStartRegex = new RegExp(/\s*\/\/\/\s*<summary>.*/);
     const summaryEndRegex = new RegExp(/\s*\/\/\/\s*<\/summary>.*/);
-    for (let index = pos-1; index >= 0; index--) {
+    for (let index = pos-1; index >= until; index--) {
         if (summaryStartRegex.test(lines[index])) {
             summaryStartIndex = index;
         }

@@ -34,11 +34,35 @@ describe('parse component summary', () => {
 
 describe('parse datafield summary', () => {
 
-    it('one component', () => {
+    it('one datafield', () => {
         const source = readSource('one-datafield');
         assert.equal(
             parseDatafieldSummary(source, 'handle'),
             "Whether or not to mark an interaction as handled after playing the sound. Useful if this component is\nused to play sound for some other component with on-use functionality"
+        );
+    });
+
+    it('one datafield no summary', () => {
+        const source = readSource('one-datafield-no-summary');
+        assert.equal(
+            parseDatafieldSummary(source, 'handle'),
+            undefined
+        );
+    });
+
+    it('many datafields', () => {
+        const source = readSource('many-datafields');
+        assert.equal(
+            parseDatafieldSummary(source, 'damage'),
+            "Base damage for this weapon. Can be modified via heavy damage or other means."
+        );
+    });
+
+    it('many datafields no summary', () => {
+        const source = readSource('many-datafields');
+        assert.equal(
+            parseDatafieldSummary(source, 'bluntStaminaDamageFactor'),
+            undefined
         );
     });
 
