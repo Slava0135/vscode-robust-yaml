@@ -1,3 +1,5 @@
+import { parseDataFields } from "./datafield";
+
 export function parseComponentSummary(source: string, component: string): string | undefined {
     const lines = source.split('\n');
     const componentRegex = new RegExp(`.*${component}Component\\s*:\\s*Component.*`);
@@ -12,6 +14,16 @@ export function parseComponentSummary(source: string, component: string): string
         return;
     }
     return parseSummaryAt(lines, componentIndex);
+}
+
+export function parseDatafieldSummary(source: string, datafield: string): string | undefined {
+    const datafields = parseDataFields(source);
+    const df = datafields.find(v => v.name === datafield);
+    if (!df) {
+        return;
+    }
+    const lines = source.split('\n');
+    return parseSummaryAt(lines, df.line-1);
 }
 
 function parseSummaryAt(lines: string[], pos: number): string | undefined {

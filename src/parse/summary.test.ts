@@ -1,9 +1,9 @@
 import assert from "assert";
 import { readFileSync } from "fs";
 import path from "path";
-import { parseComponentSummary } from "./summary";
+import { parseComponentSummary, parseDatafieldSummary } from "./summary";
 
-describe('parse summary', () => {
+describe('parse component summary', () => {
 
     it('one component', () => {
         const source = readSource('one-component');
@@ -22,11 +22,23 @@ describe('parse summary', () => {
         );
     });
 
-    it('multiline', () => {
-        const source = readSource('multiline');
+    it('multiline component', () => {
+        const source = readSource('multiline-component');
         assert.equal(
             parseComponentSummary(source, 'MeleeWeapon'),
             "When given to a mob lets them do unarmed attacks\nor when given to an item lets someone wield it to do attacks."
+        );
+    });
+
+});
+
+describe('parse datafield summary', () => {
+
+    it('one component', () => {
+        const source = readSource('one-datafield');
+        assert.equal(
+            parseDatafieldSummary(source, 'handle'),
+            "Whether or not to mark an interaction as handled after playing the sound. Useful if this component is\nused to play sound for some other component with on-use functionality"
         );
     });
 
