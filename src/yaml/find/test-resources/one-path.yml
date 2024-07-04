@@ -1,0 +1,6 @@
+- type: whatever
+  components:
+  - type: something
+    key1: somevalue
+    key2: path/to/file.txt
+    key3: "not/ a path.txt"
