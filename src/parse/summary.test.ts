@@ -1,23 +1,23 @@
 import assert from "assert";
 import { readFileSync } from "fs";
 import path from "path";
-import { parseSummary } from "./summary";
+import { parseComponentSummary } from "./summary";
 
 describe('parse summary', () => {
 
     it('one component', () => {
         const source = readSource('one-component');
         assert.equal(
-            parseSummary(source, 'MeleeWeapon'),
+            parseComponentSummary(source, 'MeleeWeapon'),
             "When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks."
         );
-        assert.equal(parseSummary(source, 'Unknown'), undefined);
+        assert.equal(parseComponentSummary(source, 'Unknown'), undefined);
     });
 
     it('many components', () => {
         const source = readSource('many-components');
         assert.equal(
-            parseSummary(source, 'MeleeWeapon'),
+            parseComponentSummary(source, 'MeleeWeapon'),
             "When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks."
         );
     });
@@ -25,7 +25,7 @@ describe('parse summary', () => {
     it('multiline', () => {
         const source = readSource('multiline');
         assert.equal(
-            parseSummary(source, 'MeleeWeapon'),
+            parseComponentSummary(source, 'MeleeWeapon'),
             "When given to a mob lets them do unarmed attacks\nor when given to an item lets someone wield it to do attacks."
         );
     });

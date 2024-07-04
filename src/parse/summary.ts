@@ -1,4 +1,4 @@
-export function parseSummary(source: string, component: string): string | undefined {
+export function parseComponentSummary(source: string, component: string): string | undefined {
     const lines = source.split('\n');
     const componentRegex = new RegExp(`.*${component}Component\\s*:\\s*Component.*`);
     let componentIndex = -1;
@@ -11,19 +11,23 @@ export function parseSummary(source: string, component: string): string | undefi
     if (componentIndex < 0) {
         return;
     }
+    return parseSummaryAt(lines, componentIndex);
+}
+
+function parseSummaryAt(lines: string[], pos: number): string | undefined {
     let summaryStartIndex = -1;
     let summaryEndIndex = -1;
     const summaryStartRegex = new RegExp(/\s*\/\/\/\s*<summary>.*/);
     const summaryEndRegex = new RegExp(/\s*\/\/\/\s*<\/summary>.*/);
-    for (let index = 0; index < componentIndex; index++) {
+    for (let index = pos-1; index >= 0; index--) {
         if (summaryStartRegex.test(lines[index])) {
             summaryStartIndex = index;
         }
         if (summaryEndRegex.test(lines[index])) {
             summaryEndIndex = index;
         }
-    }
-    if (summaryStartIndex > 0 && summaryEndIndex > 0) {
-        return lines.slice(summaryStartIndex + 1, summaryEndIndex).map(it => it.replace(/^\s*\/\/\/\s*/, '').replace(/\s*$/, '')).join('\n');
+        if (summaryStartIndex > 0 && summaryEndIndex > 0) {
+            return lines.slice(summaryStartIndex + 1, summaryEndIndex).map(it => it.replace(/^\s*\/\/\/\s*/, '').replace(/\s*$/, '')).join('\n');
+        }
     }
 }
