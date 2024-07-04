@@ -40,14 +40,20 @@ export function registerDefinitionProvider(): vscode.Disposable {
 				}
 			} else if (findPath(document.getText(), pos)) {
 				logger.debug(`finding path definition...`);
-				let path = findPath(document.getText(), pos);
+				let path = findPath(document.getText(), pos)!!;
 				if (path?.startsWith('/')) {
 					path = path.slice(1);
 				}
 				logger.debug(`searching files with path '${path}'`);
 				return vscode.workspace.findFiles(`{**/${path},**/${path}/**}`).then(uris => {
 					uris.forEach(it => {
-						locations.push(new vscode.Location(it, new vscode.Position(0, 0)));
+						const uri = it.toString();
+						if (uri.endsWith(path)) {
+							locations.push(new vscode.Location(it, new vscode.Position(0, 0)));
+						} else {
+							const start = uri.lastIndexOf(path);
+							locations.push(new vscode.Location(vscode.Uri.parse(uri.slice(0, start + path.length)), new vscode.Position(0, 0)));
+						}
 					});
 					return locations;
 				});
