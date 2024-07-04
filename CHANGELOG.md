@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+## [0.2.0] - 2024-07-4
+
+* Added datafield summary and definition provider
+* Added resource paths highlighting and definition provider
+
 ## [0.1.0] - 2024-06-22
 
 * Added component fields autocompletion

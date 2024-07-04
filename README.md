@@ -7,11 +7,10 @@ Extended YAML support for [Robust Toolbox](https://github.com/space-wizards/Robu
 > This extension is in early stages of development!
 
 * Only entity prototypes and components are supported
-  * Go to component definition
-  * Show component summary when hovering over it
-  * Highlighting of components
-  * Component autocompletion
-  * Component fields autocompletion
+  * Go to component/datafield/resource definition
+  * Show component/datafield summary when hovering over it
+  * Highlighting of components and resource paths
+  * Component/datafield autocompletion
 
 ## Requirements
 
@@ -21,4 +20,6 @@ Extended YAML support for [Robust Toolbox](https://github.com/space-wizards/Robu
 
 ## Showcase
 
-https://github.com/Slava0135/vscode-robust-yaml/assets/40753025/78e7c786-f587-4203-bad8-e806167bba23
+<https://github.com/Slava0135/vscode-robust-yaml/assets/40753025/78e7c786-f587-4203-bad8-e806167bba23>
+
+<https://github.com/Slava0135/vscode-robust-yaml/assets/40753025/6732fb5a-791d-4fd8-873c-9816a9a07939>
