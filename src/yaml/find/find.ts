@@ -125,6 +125,48 @@ export function findField(source: string, pos: Position): string | undefined {
     return ret;
 }
 
+export function findAllPaths(source: string): Map<Scalar, Range> {
+    const res = new Map<Scalar, Range>;
+    const doc = parseDocument(source);
+    visit(doc, {
+        Scalar(_key, node) {
+            if (node.range && (typeof node.value === 'string')) {
+                let content = node.value as string;
+                if (content.includes('/') && !content.includes(' ')) {
+                    const start = positionFromOffset(source, node.range[0]);
+                    const end = positionFromOffset(source, node.range[1] - 1);
+                    if (start && end) {
+                        const range = new Range(start, end);
+                        res.set(node, range);
+                    }
+                }
+            }
+        }
+    });
+    return res;
+}
+
+export function findPath(source: string, pos: Position): string | undefined {
+    let res: string | undefined;
+    const doc = parseDocument(source);
+    visit(doc, {
+        Scalar(_key, node) {
+            if (node.range && (typeof node.value === 'string')) {
+                let content = node.value as string;
+                if (content.includes('/') && !content.includes(' ')) {
+                    const start = positionFromOffset(source, node.range[0]);
+                    const end = positionFromOffset(source, node.range[1] - 1);
+                    if (start?.isBeforeOrEquals(pos) && end?.isAfterOrEquals(pos)) {
+                        res = content;
+                        return visit.BREAK;
+                    }
+                }
+            }
+        }
+    });
+    return res;
+}
+
 function visitComponents(source: string, callback: (type: Scalar, fields: YAMLMap) => symbol | undefined) {
     const doc = parseDocument(source);
     visit(doc, {
