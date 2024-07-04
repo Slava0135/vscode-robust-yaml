@@ -105,6 +105,26 @@ export function findComponentByField(source: string, pos: Position): string | un
     return ret;
 }
 
+export function findField(source: string, pos: Position): string | undefined {
+    let ret: string | undefined;
+    visitComponents(source, (_type, map) => {
+        map.items.forEach(it => {
+            let key = it.key;
+            if (isScalar(key) && key.range) {
+                const start = positionFromOffset(source, key.range[0]);
+                const end = positionFromOffset(source, key.range[1]);
+                if (start?.isBeforeOrEquals(pos) && end?.isAfterOrEquals(pos) && key.toString() !== 'type') {
+                    ret = key.toString();
+                }
+            }
+        });
+        if (ret) {
+            return visit.BREAK;
+        }
+    });
+    return ret;
+}
+
 function visitComponents(source: string, callback: (type: Scalar, fields: YAMLMap) => symbol | undefined) {
     const doc = parseDocument(source);
     visit(doc, {
