@@ -47,7 +47,7 @@ export function registerHoverProvider() {
                                 const datafield = parseDataFields(buf.toString()).find(it => it.name === datafieldName);
                                 if (datafield) {
                                     contents.pop();
-                                    contents.push(new vscode.MarkdownString(`**${datafield.type ?? '???'}**`));
+                                    contents.push(new vscode.MarkdownString(`**${datafield.type ?? '[unknown type]'}**`));
                                     const summary = parseDatafieldSummary(buf.toString(), datafieldName);
                                     if (summary) {
                                         contents.push(new vscode.MarkdownString("```xml\n" + summary + "\n```"));
