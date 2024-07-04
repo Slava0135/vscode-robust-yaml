@@ -26,7 +26,7 @@ export function parseDatafieldSummary(source: string, datafield: string): string
     const line = df.line-1;
     let until = 0;
     for (let i = line-1; i >= 0; i--) {
-        if (lines[i].trimEnd().endsWith(';')) {
+        if (lines[i].trimEnd().endsWith(';') || lines[i].includes('{') || lines[i].includes('}')) {
             until = i;
             break;
         }

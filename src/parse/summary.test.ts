@@ -50,6 +50,14 @@ describe('parse datafield summary', () => {
         );
     });
 
+    it('one datafield with component summary above', () => {
+        const source = readSource('one-datafield-component-summary');
+        assert.equal(
+            parseDatafieldSummary(source, 'handle'),
+            undefined
+        );
+    });
+
     it('many datafields', () => {
         const source = readSource('many-datafields');
         assert.equal(
