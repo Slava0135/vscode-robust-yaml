@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { findComponent, findComponentByField, findField, isAtComponentField } from './yaml/find/find';
+import { findComponent, findComponentByField, findField, findPath, isAtComponentField } from './yaml/find/find';
 import { Position } from './range/position';
 import { containsComponentDefinition } from './file/path';
 import { getComponentUris } from './uri-store';
@@ -38,6 +38,19 @@ export function registerDefinitionProvider(): vscode.Disposable {
 						});
 					}
 				}
+			} else if (findPath(document.getText(), pos)) {
+				logger.debug(`finding path definition...`);
+				let path = findPath(document.getText(), pos);
+				if (path?.startsWith('/')) {
+					path = path.slice(1);
+				}
+				logger.debug(`searching files with path '${path}'`);
+				return vscode.workspace.findFiles(`{**/${path},**/${path}/**}`).then(uris => {
+					uris.forEach(it => {
+						locations.push(new vscode.Location(it, new vscode.Position(0, 0)));
+					});
+					return locations;
+				});
 			}
 			return locations;
 		}

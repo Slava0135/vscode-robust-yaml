@@ -1,7 +1,7 @@
 import assert from "assert";
 import { readFileSync } from "fs";
 import path from "path";
-import { findAllComponents, findAllFields, findAllPaths, findComponent, findComponentByField, findField, isAtComponentField, isAtComponentType } from "./find";
+import { findAllComponents, findAllFields, findAllPaths, findComponent, findComponentByField, findField, findPath, isAtComponentField, isAtComponentType } from "./find";
 import { nonZeroBasedPosition } from "../../range/position";
 import { Range } from "../../range/range";
 
@@ -147,6 +147,14 @@ describe('find all paths', () => {
             ['path/to/file.txt', new Range(nonZeroBasedPosition(5, 11), nonZeroBasedPosition(5, 26))],
         ]);
         assert.deepEqual(actual, expected);
+    });
+});
+
+describe('find path', () => {
+    it('one path', () => {
+        let source = readSource('one-path');
+        assert.equal(findPath(source, nonZeroBasedPosition(5, 22)), "path/to/file.txt");
+        assert.equal(findPath(source, nonZeroBasedPosition(6, 22)), undefined);
     });
 });
 
