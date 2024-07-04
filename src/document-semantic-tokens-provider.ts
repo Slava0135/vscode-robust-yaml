@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
-import { findAllComponents } from './yaml/find/find';
+import { findAllComponents, findAllPaths } from './yaml/find/find';
 import { logger } from './logging';
 
-const tokenTypes: string[] = ['type'];
+const tokenTypes: string[] = ['type', 'decorator'];
 const tokenModifiers: string[] = [];
 const legend = new vscode.SemanticTokensLegend(tokenTypes, tokenModifiers);
 
@@ -16,6 +16,13 @@ export function registerDocumentSemanticTokensProvider(): vscode.Disposable {
                 tokensBuilder.push(
                     new vscode.Range(new vscode.Position(c.start.line, c.start.character), new vscode.Position(c.end.line, c.end.character + 1)),
                     'type',
+                    []
+                );
+            });
+            findAllPaths(document.getText()).forEach(p => {
+                tokensBuilder.push(
+                    new vscode.Range(new vscode.Position(p.start.line, p.start.character), new vscode.Position(p.end.line, p.end.character + 1)),
+                    'decorator',
                     []
                 );
             });
