@@ -6,6 +6,7 @@ import { parseComponentSummary, parseDatafieldSummary } from './parse/summary';
 import { getComponentUris } from './uri-store';
 import { logger } from './logging';
 import { parseDataFields } from './parse/datafield';
+import { codeBlock, wrapError } from './markdown/markdown';
 
 export function registerHoverProvider() {
     return vscode.languages.registerHoverProvider('yaml', {
@@ -22,7 +23,9 @@ export function registerHoverProvider() {
                         if (buf) {
                             const summary = parseComponentSummary(buf.toString(), component.toString());
                             if (summary) {
-                                contents.push(new vscode.MarkdownString("```xml\n" + summary + "\n```"));
+                                contents.push(new vscode.MarkdownString(codeBlock('xml', summary)));
+                            } else {
+                                contents.push(new vscode.MarkdownString(wrapError('no description')));
                             }
                             return {
                                 contents: contents
@@ -30,7 +33,7 @@ export function registerHoverProvider() {
                         }
                     });
                 } else {
-                    contents.push(new vscode.MarkdownString(`???`));
+                    contents.push(new vscode.MarkdownString(wrapError('unknown component')));
                 }
                 return {
                     contents: contents
@@ -38,7 +41,7 @@ export function registerHoverProvider() {
             } else if (isAtComponentField(document.getText(), pos)) {
                 const componentName = findComponentByField(document.getText(), pos);
                 const datafieldName = findField(document.getText(), pos);
-                contents.push(new vscode.MarkdownString('**???**'));
+                contents.push(new vscode.MarkdownString(wrapError('unknown datafield')));
                 if (componentName && datafieldName) {
                     const uri = getComponentUris().find(uri => containsComponentDefinition(uri.toString(), componentName));
                     if (uri) {
@@ -47,10 +50,12 @@ export function registerHoverProvider() {
                                 const datafield = parseDataFields(buf.toString()).find(it => it.name === datafieldName);
                                 if (datafield) {
                                     contents.pop();
-                                    contents.push(new vscode.MarkdownString(`**${datafield.type ?? '[unknown type]'}**`));
+                                    contents.push(new vscode.MarkdownString(`**${datafield.type ?? wrapError('unknown type')}**`));
                                     const summary = parseDatafieldSummary(buf.toString(), datafieldName);
                                     if (summary) {
-                                        contents.push(new vscode.MarkdownString("```xml\n" + summary + "\n```"));
+                                        contents.push(new vscode.MarkdownString(codeBlock('xml', summary)));
+                                    } else {
+                                        contents.push(new vscode.MarkdownString(wrapError('no description')));
                                     }
                                 }
                                 return {
