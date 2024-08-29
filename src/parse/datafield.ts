@@ -17,7 +17,12 @@ export function parseDataFields(source: string): DataField[] {
     const lines = source.split('\n');
     const inferredDataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\((.*)(,.*)*\))?(\s*,.+)*\].*/);
     const dataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\("(.*)"(,.*)*\))(\s*,.+)*\].*/);
-    const fieldPattern = new RegExp(/.*(public|internal|private|protected|readonly)[^;={]*\s+([^;={]+)\s+([A-Za-z0-9_-]+)\s*(=|;|\{).*/);
+    // MODIFIER TYPE NAME { GET/SET } = VALUE
+    // GET/SET is optional
+    // VALUE is optional (can be ; instead) or be '{'
+    const fieldPattern = new RegExp(
+        /.*(public|internal|private|protected|readonly)[^;={]*\s+([^;={]+)\s+([A-Za-z0-9_-]+(\s*,\s*[A-Za-z0-9_-]+)*)\s*(=|;|\{).*/
+    );
     let i = 0;
     while (i < lines.length) {
         let match = lines[i].match(dataFieldPattern);
@@ -37,8 +42,10 @@ export function parseDataFields(source: string): DataField[] {
                 while (i < lines.length) {
                     let match = lines[i].match(fieldPattern);
                     if (match) {
-                        let name = match[3];
-                        dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), match[2], i+1));
+                        let names = match[3].replaceAll(" ", "").split(","); // can be multiple fields on same line
+                        for (let name in names) {
+                            dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), match[2], i+1));
+                        }
                         break;
                     }
                     i++;
