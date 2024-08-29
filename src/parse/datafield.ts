@@ -17,7 +17,9 @@ export function parseDataFields(source: string): DataField[] {
     const lines = source.split('\n');
     const inferredDataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\((.*)(,.*)*\))?(\s*,.+)*\].*/);
     const dataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\("(?<NAME>.*)"(,.*)*\))(\s*,.+)*\].*/);
-    const fieldPattern = new RegExp(/.*(public|internal|private|protected|readonly)[^;={]*\s+(?<TYPE>[^;={]+)\s+(?<NAMES>[A-Za-z0-9_-]+)\s*(=|;|\{).*/);
+    const fieldPattern = new RegExp(
+        /.*(public|internal|private|protected|readonly)\s+(?<TYPE>[^;={ ]+(<[^;={]+>)?)\s+(?<NAMES>[A-Za-z0-9_-]+(,\s*[A-Za-z0-9_-]+)*)\s*(=|;|\{).*/
+    );
     let i = 0;
     while (i < lines.length) {
         let match = lines[i].match(dataFieldPattern);
@@ -39,8 +41,9 @@ export function parseDataFields(source: string): DataField[] {
                     let match = lines[i].match(fieldPattern);
                     if (match) {
                         let groups = match.groups as {TYPE: string, NAMES: string};
-                        let name = groups.NAMES;
-                        dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), groups.TYPE, i+1));
+                        for (let name of groups.NAMES.replaceAll(" ", "").split(",")) {
+                            dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), groups.TYPE, i+1));
+                        }
                         break;
                     }
                     i++;
