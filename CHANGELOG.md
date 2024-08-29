@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+## [0.2.1] - 2024-08-29
+
+* Fixed C# datafields not being recognized if they are on same line. (Issue #18)
+* Fixed datafields with generic types having "unknown" type. (Issue #16)
+
 ## [0.2.0] - 2024-07-4
 
 * Added datafield summary and definition provider
