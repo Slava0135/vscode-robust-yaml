@@ -38,8 +38,9 @@ export function parseDataFields(source: string): DataField[] {
                 while (i < lines.length) {
                     let match = lines[i].match(fieldPattern);
                     if (match) {
-                        let name = match[3];
-                        dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), match[2], i+1));
+                        let groups = match.groups as {TYPE: string, NAMES: string};
+                        let name = groups.NAMES;
+                        dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), groups.TYPE, i+1));
                         break;
                     }
                     i++;
