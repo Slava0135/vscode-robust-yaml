@@ -120,6 +120,11 @@ describe('parse datafields', () => {
         assert.deepEqual(parseDataFields(source), expected);
     });
 
+    it('one generic datafield', () => {
+        const source = readSource('one-generic-datafield');
+        assert.deepEqual(parseDataFields(source), [new DataField('guides', 'List<string>', 18)]);
+    });
+
 });
 
 function readSource(name: string): string {

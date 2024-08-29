@@ -5,9 +5,7 @@ export class DataField {
 
     constructor(name: string, type: string, line: number) {
         this.name = name;
-        if (!type.includes(">") && !type.includes("<")) {
-            this.type = type;
-        }
+        this.type = type;
         this.line = line;
     }
 }
