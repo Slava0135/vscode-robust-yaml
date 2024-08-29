@@ -110,6 +110,16 @@ describe('parse datafields', () => {
         assert.deepEqual(parseDataFields(source), expected);
     });
 
+    it('many datafields on same line', () => {
+        const source = readSource('many-datafields-same-line');
+        const expected = [
+            new DataField('fieldA', 'SomeType', 12),
+            new DataField('fieldB', 'SomeType', 12),
+            new DataField('fieldC', 'SomeType', 12),
+        ];
+        assert.deepEqual(parseDataFields(source), expected);
+    });
+
 });
 
 function readSource(name: string): string {
