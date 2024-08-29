@@ -16,18 +16,13 @@ export function parseDataFields(source: string): DataField[] {
     const dataFields: DataField[] = [];
     const lines = source.split('\n');
     const inferredDataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\((.*)(,.*)*\))?(\s*,.+)*\].*/);
-    const dataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\("(.*)"(,.*)*\))(\s*,.+)*\].*/);
-    // MODIFIER TYPE NAME { GET/SET } = VALUE
-    // GET/SET is optional
-    // VALUE is optional (can be ; instead) or be '{'
-    const fieldPattern = new RegExp(
-        /.*(public|internal|private|protected|readonly)[^;={]*\s+([^;={]+)\s+([A-Za-z0-9_-]+(\s*,\s*[A-Za-z0-9_-]+)*)\s*(=|;|\{).*/
-    );
+    const dataFieldPattern = new RegExp(/.*\[(.+,\s*)*DataField(\("(?<NAME>.*)"(,.*)*\))(\s*,.+)*\].*/);
+    const fieldPattern = new RegExp(/.*(public|internal|private|protected|readonly)[^;={]*\s+([^;={]+)\s+([A-Za-z0-9_-]+)\s*(=|;|\{).*/);
     let i = 0;
     while (i < lines.length) {
         let match = lines[i].match(dataFieldPattern);
         if (match) {
-            let name = match[3];
+            let name = (match.groups as {NAME: string}).NAME;
             while (i < lines.length) {
                 let match = lines[i].match(fieldPattern);
                 if (match) {
@@ -42,10 +37,8 @@ export function parseDataFields(source: string): DataField[] {
                 while (i < lines.length) {
                     let match = lines[i].match(fieldPattern);
                     if (match) {
-                        let names = match[3].replaceAll(" ", "").split(","); // can be multiple fields on same line
-                        for (let name in names) {
-                            dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), match[2], i+1));
-                        }
+                        let name = match[3];
+                        dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), match[2], i+1));
                         break;
                     }
                     i++;
