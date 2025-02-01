@@ -4,8 +4,6 @@ Extended YAML support for [Robust Toolbox](https://github.com/space-wizards/Robu
 
 ## Features
 
-> This extension is in early stages of development!
-
 * Only entity prototypes and components are supported
   * Go to component/datafield/resource definition
   * Show component/datafield summary when hovering over it
@@ -15,8 +13,6 @@ Extended YAML support for [Robust Toolbox](https://github.com/space-wizards/Robu
 ## Requirements
 
 > This extension **does NOT provide base YAML support**, search other extensions (for example [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)).
-
-> C# extension is not required.
 
 ## Showcase
 
