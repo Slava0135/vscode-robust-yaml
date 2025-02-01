@@ -4,15 +4,19 @@ Extended YAML support for [Robust Toolbox](https://github.com/space-wizards/Robu
 
 ## Features
 
-* Only entity prototypes and components are supported
-  * Go to component/datafield/resource definition
-  * Show component/datafield summary when hovering over it
-  * Highlighting of components and resource paths
-  * Component/datafield autocompletion
+* Entity prototypes and components
+  * __Go to__ component/datafield definition
+  * Show component/datafield __summary__ when hovering over
+  * Component __highlighting__
+  * Component/datafield __autocompletion__
+* Resource (file) paths
+  * __Go to__ resource definition
+  * Resource path __highlighting__
+* __Color preview + color picker__ for strings in `"#rrggbb"` / `"#rrggbbaa"` format
 
 ## Requirements
 
-> This extension **does NOT provide base YAML support**, search other extensions (for example [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)).
+> This extension __does not provide base YAML support__ (e.g. formatting), use with other extensions (e.g. [YAML Language Support by Red Hat](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml)).
 
 ## Showcase
 

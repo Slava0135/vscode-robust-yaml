@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 
 ## [Unreleased]
 
+## [0.3.0] - 2024-02-01
+
+* Color preview + color picker for strings in `"#rrggbb"` / `"#rrggbbaa"` format. (Issue #6)
+
 ## [0.2.1] - 2024-08-29
 
 * Fixed C# datafields not being recognized if they are on same line. (Issue #18)
