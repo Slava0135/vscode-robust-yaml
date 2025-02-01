@@ -1,0 +1,6 @@
+- type: whatever
+  components:
+  - type: something
+    key1: something
+    key2: "#AABEEF"
+    key3: "not/ a path.txt"
