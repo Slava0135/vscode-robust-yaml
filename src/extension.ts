@@ -7,6 +7,7 @@ import * as uristore from './uri-store';
 import { logger } from './logging';
 import * as logging from './logging';
 import * as configuration from './configuration';
+import { registerDocumentColorProvider } from './document-color-provider';
 
 export function activate(context: vscode.ExtensionContext) {
     initLogging(context);
@@ -16,6 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(registerDocumentSemanticTokensProvider());
     context.subscriptions.push(registerHoverProvider());
     context.subscriptions.push(registerCompletionItemProvider());
+    context.subscriptions.push(registerDocumentColorProvider());
     logger.info("extension activated!");
 }
 
