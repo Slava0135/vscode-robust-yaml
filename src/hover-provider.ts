@@ -69,7 +69,7 @@ export function registerHoverProvider() {
                             }
                         });
                     }
-                } 
+                }
                 return {
                     contents: contents
                 };
