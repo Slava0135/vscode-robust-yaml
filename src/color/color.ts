@@ -1,15 +1,17 @@
-const hexRegex = new RegExp(/^#([A-Fa-f0-9]{6})$/);
+const hexRegex = new RegExp(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$/);
 
 export class Color {
 
     readonly red: number;
     readonly green: number;
     readonly blue: number;
+    readonly alpha: number | undefined;
 
-    constructor(red: number, green: number, blue: number) {
+    constructor(red: number, green: number, blue: number, alpha?: number | undefined) {
         this.red = red;
         this.green = green;
         this.blue = blue;
+        this.alpha = alpha;
     }
 
     public equals(other: Color): boolean {
@@ -17,10 +19,15 @@ export class Color {
     }
 
     public toHex(): string {
-        let red = Math.floor(this.red).toString(16).padStart(2, '0');
-        let green = Math.floor(this.green).toString(16).padStart(2, '0');
-        let blue = Math.floor(this.blue).toString(16).padStart(2, '0');
-        return `${red}${green}${blue}`;
+        const red = Math.floor(this.red).toString(16).padStart(2, '0');
+        const green = Math.floor(this.green).toString(16).padStart(2, '0');
+        const blue = Math.floor(this.blue).toString(16).padStart(2, '0');
+        if (this.alpha) {
+            const alpha = Math.floor(this.alpha).toString(16).padStart(2, '0');
+            return `#${red}${green}${blue}${alpha}`;
+        } else {
+            return `#${red}${green}${blue}`;
+        }
     }
 }
 
@@ -33,6 +40,11 @@ export function hexToColor(str: string): Color | undefined {
         const red = parseInt(str.slice(1, 2 + 1), 16);
         const blue = parseInt(str.slice(3, 4 + 1), 16);
         const green = parseInt(str.slice(5, 6 + 1), 16);
-        return new Color(red, blue, green);
+        if (str.length === 1 + 2 * 4) {
+            const alpha = parseInt(str.slice(7, 8 + 1), 16);
+            return new Color(red, blue, green, alpha);
+        } else {
+            return new Color(red, blue, green);
+        }
     }
 }

@@ -5,6 +5,7 @@ describe('colors', () => {
 
     it('is hex color', () => {
         assert.equal(isHexColor("#1AFFa1"), true);
+        assert.equal(isHexColor("#1AFFa166"), true);
         assert.equal(isHexColor("#F00"), false);
         assert.equal(isHexColor("123456"), false);
         assert.equal(isHexColor("#123abce"), false);
@@ -16,6 +17,10 @@ describe('colors', () => {
         const actual = hexToColor("#1AFFa1");
         const expected = new Color(26, 255, 161);
         assert.ok(actual !== undefined && expected.equals(actual));
+        assert.equal(isHexColor("#1AFFa166"), true);
+        const actualAlpha = hexToColor("#1AFFa166");
+        const expectedAlpha = new Color(26, 255, 161, 66);
+        assert.ok(actualAlpha !== undefined && expectedAlpha.equals(actualAlpha));
     });
 
 });
