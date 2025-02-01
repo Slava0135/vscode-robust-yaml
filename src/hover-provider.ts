@@ -21,6 +21,7 @@ export function registerHoverProvider() {
                     contents.push(new vscode.MarkdownString(`#### ${component.toString()}Component`));
                     return vscode.workspace.fs.readFile(uri).then(buf => {
                         if (buf) {
+                            contents.push(new vscode.MarkdownString("---"));
                             const summary = parseComponentSummary(buf.toString(), component.toString());
                             if (summary) {
                                 contents.push(new vscode.MarkdownString(codeBlock('xml', summary)));
