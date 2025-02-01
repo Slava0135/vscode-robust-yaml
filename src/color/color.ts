@@ -16,6 +16,12 @@ export class Color {
         return this.red === other.red && this.green === other.green && this.blue === other.blue;
     }
 
+    public toHex(): string {
+        let red = Math.floor(this.red).toString(16).padStart(2, '0');
+        let green = Math.floor(this.green).toString(16).padStart(2, '0');
+        let blue = Math.floor(this.blue).toString(16).padStart(2, '0');
+        return `${red}${green}${blue}`;
+    }
 }
 
 export function isHexColor(str: string): boolean {

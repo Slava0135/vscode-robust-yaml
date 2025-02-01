@@ -1,14 +1,16 @@
 import * as vscode from 'vscode';
 import { findAllColors } from './yaml/find/find';
+import { Color } from './color/color';
 
 export function registerDocumentColorProvider(): vscode.Disposable {
     return vscode.languages.registerColorProvider('yaml', {
-        provideColorPresentations() {
+        provideColorPresentations(color, _context, _token) {
+            const colorHex = new Color(255 * color.red, 255 * color.green, 255 * color.blue).toHex();
             return [{
-                label: "Pick Color"
+                label: `"#${colorHex}"`
             }];
         },
-        provideDocumentColors(document, token) {
+        provideDocumentColors(document, _token) {
             const colors: vscode.ColorInformation[] = [];
             findAllColors(document.getText()).forEach(([color, range]) => {
                 colors.push(new vscode.ColorInformation(
