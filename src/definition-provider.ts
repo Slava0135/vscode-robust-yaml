@@ -5,6 +5,7 @@ import { containsComponentDefinition } from './file/path';
 import { getComponentUris } from './uri-store';
 import { logger } from './logging';
 import { parseDataFields } from './parse/datafield';
+import { Scalar } from 'yaml';
 
 export function registerDefinitionProvider(): vscode.Disposable {
 	return vscode.languages.registerDefinitionProvider('yaml', {
@@ -14,10 +15,7 @@ export function registerDefinitionProvider(): vscode.Disposable {
 			const pos = new Position(position.line, position.character);
 			const component = findComponent(document.getText(), pos);
 			if (component) {
-				logger.debug(`finding component definition...`);
-				getComponentUris()
-					.filter(uri => containsComponentDefinition(uri.toString(), component.toString()))
-					.forEach(uri => locations.push(new vscode.Location(uri, new vscode.Position(0, 0))));
+				provideComponentDefinition(component, locations);
 			} else if (isAtComponentField(document.getText(), pos)) {
 				logger.debug(`finding datafield definition...`);
 				const componentName = findComponentByField(document.getText(), pos);
@@ -26,16 +24,7 @@ export function registerDefinitionProvider(): vscode.Disposable {
 					const components = getComponentUris().filter(uri => containsComponentDefinition(uri.toString(), componentName.toString()));
 					if (components.length === 1) {
 						let uri = components[0];
-						return vscode.workspace.fs.readFile(uri).then(buf => {
-							if (buf) {
-								const datafields = parseDataFields(buf.toString());
-								const datafield = datafields.find(it => it.name === datafieldName);
-								if (datafield) {
-									locations.push(new vscode.Location(uri, new vscode.Position(datafield.line-1, 0)));
-								}
-								return locations;
-							}
-						});
+						return provideDataFieldDefinition(uri, datafieldName, locations);
 					}
 				}
 			} else if (findPath(document.getText(), pos)) {
@@ -45,20 +34,44 @@ export function registerDefinitionProvider(): vscode.Disposable {
 					path = path.slice(1);
 				}
 				logger.debug(`searching files with path '${path}'`);
-				return vscode.workspace.findFiles(`{**/${path},**/${path}/**}`).then(uris => {
-					uris.forEach(it => {
-						const uri = it.toString();
-						if (uri.endsWith(path)) {
-							locations.push(new vscode.Location(it, new vscode.Position(0, 0)));
-						} else {
-							const start = uri.lastIndexOf(path);
-							locations.push(new vscode.Location(vscode.Uri.parse(uri.slice(0, start + path.length)), new vscode.Position(0, 0)));
-						}
-					});
-					return locations;
-				});
+				return findFiles(path, locations);
 			}
 			return locations;
 		}
 	});
+}
+
+function findFiles(path: string, locations: vscode.Location[]): vscode.ProviderResult<vscode.Definition | vscode.LocationLink[]> {
+	return vscode.workspace.findFiles(`{**/${path},**/${path}/**}`).then(uris => {
+		uris.forEach(it => {
+			const uri = it.toString();
+			if (uri.endsWith(path)) {
+				locations.push(new vscode.Location(it, new vscode.Position(0, 0)));
+			} else {
+				const start = uri.lastIndexOf(path);
+				locations.push(new vscode.Location(vscode.Uri.parse(uri.slice(0, start + path.length)), new vscode.Position(0, 0)));
+			}
+		});
+		return locations;
+	});
+}
+
+function provideDataFieldDefinition(uri: vscode.Uri, datafieldName: string, locations: vscode.Location[]): vscode.ProviderResult<vscode.Definition | vscode.LocationLink[]> {
+	return vscode.workspace.fs.readFile(uri).then(buf => {
+		if (buf) {
+			const datafields = parseDataFields(buf.toString());
+			const datafield = datafields.find(it => it.name === datafieldName);
+			if (datafield) {
+				locations.push(new vscode.Location(uri, new vscode.Position(datafield.line - 1, 0)));
+			}
+			return locations;
+		}
+	});
+}
+
+function provideComponentDefinition(component: Scalar, locations: vscode.Location[]) {
+	logger.debug(`finding component definition...`);
+	getComponentUris()
+		.filter(uri => containsComponentDefinition(uri.toString(), component.toString()))
+		.forEach(uri => locations.push(new vscode.Location(uri, new vscode.Position(0, 0))));
 }
