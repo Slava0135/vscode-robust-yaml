@@ -15,7 +15,7 @@ export class Color {
     }
 
     public equals(other: Color): boolean {
-        return this.red === other.red && this.green === other.green && this.blue === other.blue;
+        return this.red === other.red && this.green === other.green && this.blue === other.blue && this.alpha === other.alpha;
     }
 
     public toHex(): string {

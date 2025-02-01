@@ -19,8 +19,13 @@ describe('colors', () => {
         assert.ok(actual !== undefined && expected.equals(actual));
         assert.equal(isHexColor("#1AFFa166"), true);
         const actualAlpha = hexToColor("#1AFFa166");
-        const expectedAlpha = new Color(26, 255, 161, 66);
+        const expectedAlpha = new Color(26, 255, 161, 102);
         assert.ok(actualAlpha !== undefined && expectedAlpha.equals(actualAlpha));
+    });
+
+    it('color to hex', () => {
+        assert.equal("#1affa1", new Color(26, 255, 161).toHex());
+        assert.equal("#1affa166", new Color(26, 255, 161, 102).toHex());
     });
 
 });
