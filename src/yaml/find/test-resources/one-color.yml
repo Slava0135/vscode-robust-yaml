@@ -1,0 +1,6 @@
+- type: whatever
+  components:
+  - type: something
+    key1: something
+    key2: "#1AFFa1"
+    key3: 123456

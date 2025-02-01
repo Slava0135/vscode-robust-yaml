@@ -1,9 +1,10 @@
 import assert from "assert";
 import { readFileSync } from "fs";
 import path from "path";
-import { findAllComponents, findAllFields, findAllPaths, findComponent, findComponentByField, findField, findPath, isAtComponentField, isAtComponentType } from "./find";
+import { findAllColors, findAllComponents, findAllFields, findAllPaths, findComponent, findComponentByField, findField, findPath, isAtComponentField, isAtComponentType } from "./find";
 import { nonZeroBasedPosition } from "../../range/position";
 import { Range } from "../../range/range";
+import { Color } from "../../color/color";
 
 describe('find component in yaml document', () => {
 
@@ -148,6 +149,16 @@ describe('find all paths', () => {
             ['path/to/file.txt', new Range(nonZeroBasedPosition(5, 11), nonZeroBasedPosition(5, 26))],
         ]);
         assert.deepEqual(actual, expected);
+    });
+});
+
+describe('find all colors', () => {
+    it('one color', () => {
+        let source = readSource('one-color');
+        const actual = findAllColors(source);
+        const expected: [color: Color, range: Range][] = [];
+        expected.push([new Color(26, 255, 161), new Range(nonZeroBasedPosition(5, 11), nonZeroBasedPosition(5, 19))]);
+        assert.deepEqual(expected, actual);
     });
 });
 

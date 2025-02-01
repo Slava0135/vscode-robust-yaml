@@ -1,6 +1,7 @@
 import { Scalar, YAMLMap, isCollection, isScalar, parseDocument, visit } from "yaml";
 import { Position, positionFromOffset } from "../../range/position";
 import { Range } from "../../range/range";
+import { Color, hexToColor, isHexColor } from "../../color/color";
 
 export function findComponent(source: string, pos: Position): Scalar | undefined {
     let component: Scalar | undefined;
@@ -159,6 +160,28 @@ export function findPath(source: string, pos: Position): string | undefined {
                     if (start?.isBeforeOrEquals(pos) && end?.isAfterOrEquals(pos)) {
                         res = content;
                         return visit.BREAK;
+                    }
+                }
+            }
+        }
+    });
+    return res;
+}
+
+export function findAllColors(source: string): [color: Color, range: Range][] {
+    const res: [color: Color, range: Range][] = [];
+    const doc = parseDocument(source);
+    visit(doc, {
+        Scalar(_key, node) {
+            if (node.range && (typeof node.value === 'string')) {
+                let content = node.value as string;
+                if (isHexColor(content)) {
+                    const start = positionFromOffset(source, node.range[0]);
+                    const end = positionFromOffset(source, node.range[1] - 1);
+                    const color = hexToColor(content);
+                    if (color && start && end) {
+                        const range = new Range(start, end);
+                        res.push([color, range]);
                     }
                 }
             }

@@ -45,7 +45,8 @@
       "hoverProvider": true,
       "definitionProvider": true,
       "documentSemanticTokensProvider": true,
-      "completionItemProvider": true
+      "completionItemProvider": true,
+      "colorProvider": true
     },
     "configuration": {
       "title": "Robust YAML",
