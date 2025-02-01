@@ -62,10 +62,10 @@ describe('find all components in yaml document', () => {
     it('one entity - many components', () => {
         let source = readSource('one-entity-many-components');
         const components = findAllComponents(source).entries();
-        const actual = new Map(Array.from(components, ([k, v]) => { 
-            return [k.toString(), v]; 
+        const actual = new Map(Array.from(components, ([k, v]) => {
+            return [k.toString(), v];
         }));
-        const expected = new Map([ 
+        const expected = new Map([
             ['comp1', new Range(nonZeroBasedPosition(3, 11), nonZeroBasedPosition(3, 15))],
             ['comp2', new Range(nonZeroBasedPosition(7, 11), nonZeroBasedPosition(7, 15))],
             ['comp3', new Range(nonZeroBasedPosition(11, 11), nonZeroBasedPosition(11, 15))]
@@ -78,10 +78,10 @@ describe('find all fields in yaml document', () => {
     it('one entity - many components', () => {
         let source = readSource('one-entity-many-components');
         const components = findAllFields(source).entries();
-        const actual = new Map(Array.from(components, ([k, v]) => { 
-            return [k.toString(), v]; 
+        const actual = new Map(Array.from(components, ([k, v]) => {
+            return [k.toString(), v];
         }));
-        const expected = new Map([ 
+        const expected = new Map([
             ['key1', new Range(nonZeroBasedPosition(4, 5), nonZeroBasedPosition(4, 9))],
             ['key2', new Range(nonZeroBasedPosition(5, 5), nonZeroBasedPosition(5, 9))],
             ['key3', new Range(nonZeroBasedPosition(6, 5), nonZeroBasedPosition(6, 9))],
@@ -99,22 +99,23 @@ describe('find all fields in yaml document', () => {
 describe('is at component type', () => {
     it('one entity - one component', () => {
         let source = readSource('one-entity-one-component');
-        assert.ok(isAtComponentType(source,nonZeroBasedPosition(3, 11)));
-        assert.ok(isAtComponentType(source,nonZeroBasedPosition(3, 15)));
-        assert.equal(isAtComponentType(source,nonZeroBasedPosition(3, 10)), false);
-        assert.equal(isAtComponentType(source,nonZeroBasedPosition(3, 16)), false);
-        assert.equal(isAtComponentType(source,nonZeroBasedPosition(4, 11)), false);
+        assert.ok(isAtComponentType(source, nonZeroBasedPosition(3, 11)));
+        assert.ok(isAtComponentType(source, nonZeroBasedPosition(3, 15)));
+        assert.equal(isAtComponentType(source, nonZeroBasedPosition(3, 10)), false);
+        assert.equal(isAtComponentType(source, nonZeroBasedPosition(3, 16)), false);
+        assert.equal(isAtComponentType(source, nonZeroBasedPosition(4, 11)), false);
     });
 });
 
 describe('is at component field', () => {
     it('one entity - one component', () => {
         let source = readSource('one-entity-one-component');
-        assert.ok(isAtComponentField(source,nonZeroBasedPosition(4, 5)));
-        assert.ok(isAtComponentField(source,nonZeroBasedPosition(4, 9)));
-        assert.equal(isAtComponentField(source,nonZeroBasedPosition(4, 4)), false);
-        assert.equal(isAtComponentField(source,nonZeroBasedPosition(4, 10)), false);
-        assert.equal(isAtComponentField(source,nonZeroBasedPosition(5, 11)), false);
+        assert.ok(isAtComponentField(source, nonZeroBasedPosition(4, 5)));
+        assert.ok(isAtComponentField(source, nonZeroBasedPosition(4, 9)));
+        assert.equal(isAtComponentField(source, nonZeroBasedPosition(3, 6)), false);
+        assert.equal(isAtComponentField(source, nonZeroBasedPosition(4, 4)), false);
+        assert.equal(isAtComponentField(source, nonZeroBasedPosition(4, 10)), false);
+        assert.equal(isAtComponentField(source, nonZeroBasedPosition(5, 11)), false);
     });
 });
 
@@ -140,10 +141,10 @@ describe('find all paths', () => {
     it('one path', () => {
         let source = readSource('one-path');
         const paths = findAllPaths(source).entries();
-        const actual = new Map(Array.from(paths, ([k, v]) => { 
-            return [k.toString(), v]; 
+        const actual = new Map(Array.from(paths, ([k, v]) => {
+            return [k.toString(), v];
         }));
-        const expected = new Map([ 
+        const expected = new Map([
             ['path/to/file.txt', new Range(nonZeroBasedPosition(5, 11), nonZeroBasedPosition(5, 26))],
         ]);
         assert.deepEqual(actual, expected);

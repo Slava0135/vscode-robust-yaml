@@ -38,7 +38,7 @@ export function findAllFields(source: string): Map<Scalar, Range> {
     visitComponents(source, (_type, map) => {
         map.items.forEach(it => {
             let key = it.key;
-            if (isScalar(key) && key.toString() !== 'type' && key.range) {
+            if (isScalar(key) && key.range && key.toString() !== 'type') {
                 const start = positionFromOffset(source, key.range[0]);
                 const end = positionFromOffset(source, key.range[1]);
                 if (start && end) {
@@ -75,7 +75,7 @@ export function isAtComponentField(source: string, pos: Position): boolean {
     visitComponents(source, (_type, map) => {
         map.items.forEach(it => {
             let key = it.key;
-            if (isScalar(key) && key.range) {
+            if (isScalar(key) && key.range && key.toString() !== 'type') {
                 const start = positionFromOffset(source, key.range[0]);
                 const end = positionFromOffset(source, key.range[1]);
                 if (start?.isBeforeOrEquals(pos) && end?.isAfterOrEquals(pos)) {
@@ -110,10 +110,10 @@ export function findField(source: string, pos: Position): string | undefined {
     visitComponents(source, (_type, map) => {
         map.items.forEach(it => {
             let key = it.key;
-            if (isScalar(key) && key.range) {
+            if (isScalar(key) && key.range && key.toString() !== 'type') {
                 const start = positionFromOffset(source, key.range[0]);
                 const end = positionFromOffset(source, key.range[1]);
-                if (start?.isBeforeOrEquals(pos) && end?.isAfterOrEquals(pos) && key.toString() !== 'type') {
+                if (start?.isBeforeOrEquals(pos) && end?.isAfterOrEquals(pos)) {
                     ret = key.toString();
                 }
             }
