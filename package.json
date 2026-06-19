@@ -10,7 +10,7 @@
   "description": "Extended YAML support for Robust Toolbox",
   "version": "0.3.0",
   "engines": {
-    "vscode": "^1.96.0"
+    "vscode": "^1.125.0"
   },
   "icon": "showcase/icon.png",
   "galleryBanner": {
@@ -84,20 +84,20 @@
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
-    "@types/node": "20.x",
-    "@types/vscode": "^1.96.0",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1",
-    "esbuild": "^0.23.1",
-    "eslint": "^8.57.1",
+    "@types/node": "24.x",
+    "@types/vscode": "^1.125.0",
+    "@typescript-eslint/eslint-plugin": "^8.61.1",
+    "@typescript-eslint/parser": "^8.61.1",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^3.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.5.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.3"
+    "typescript": "^6.0.3"
   },
   "dependencies": {
-    "minimatch": "^10.0.1",
-    "winston": "^3.17.0",
-    "yaml": "^2.7.0"
+    "minimatch": "^10.2.5",
+    "winston": "^3.19.0",
+    "yaml": "^2.9.0"
   }
 }
