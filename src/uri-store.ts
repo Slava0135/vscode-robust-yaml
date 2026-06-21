@@ -38,7 +38,7 @@ function addUris(uris: readonly vscode.Uri[]) {
     if (uris.length === 1) {
         logger.debug(uris.toString());
     }
-    let old = componentUris.size;
+    const old = componentUris.size;
     uris.forEach(it => componentUris.add(it.fsPath));
     logger.debug(`store size is ${componentUris.size} (was ${old})`);
 };
@@ -48,7 +48,7 @@ function remUris(uris: readonly vscode.Uri[]) {
     if (uris.length === 1) {
         logger.debug(uris.toString());
     }
-    let old = componentUris.size;
+    const old = componentUris.size;
     uris.forEach(it => componentUris.delete(it.fsPath));
     logger.debug(`store size is ${componentUris.size} (was ${old})`);
 }

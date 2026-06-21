@@ -38,7 +38,7 @@ export function findAllFields(source: string): Map<Scalar, Range> {
     const res = new Map<Scalar, Range>;
     visitComponents(source, (_type, map) => {
         map.items.forEach(it => {
-            let key = it.key;
+            const key = it.key;
             if (isScalar(key) && key.range && key.toString() !== 'type') {
                 const start = positionFromOffset(source, key.range[0]);
                 const end = positionFromOffset(source, key.range[1]);
@@ -75,7 +75,7 @@ export function isAtComponentField(source: string, pos: Position): boolean {
     let ret = false;
     visitComponents(source, (_type, map) => {
         map.items.forEach(it => {
-            let key = it.key;
+            const key = it.key;
             if (isScalar(key) && key.range && key.toString() !== 'type') {
                 const start = positionFromOffset(source, key.range[0]);
                 const end = positionFromOffset(source, key.range[1]);
@@ -110,7 +110,7 @@ export function findField(source: string, pos: Position): string | undefined {
     let ret: string | undefined;
     visitComponents(source, (_type, map) => {
         map.items.forEach(it => {
-            let key = it.key;
+            const key = it.key;
             if (isScalar(key) && key.range && key.toString() !== 'type') {
                 const start = positionFromOffset(source, key.range[0]);
                 const end = positionFromOffset(source, key.range[1]);
@@ -132,7 +132,7 @@ export function findAllPaths(source: string): Map<Scalar, Range> {
     visit(doc, {
         Scalar(_key, node) {
             if (node.range && (typeof node.value === 'string')) {
-                let content = node.value as string;
+                const content = node.value as string;
                 if (content.includes('/') && !content.includes(' ')) {
                     const start = positionFromOffset(source, node.range[0]);
                     const end = positionFromOffset(source, node.range[1] - 1);
@@ -153,7 +153,7 @@ export function findPath(source: string, pos: Position): string | undefined {
     visit(doc, {
         Scalar(_key, node) {
             if (node.range && (typeof node.value === 'string')) {
-                let content = node.value as string;
+                const content = node.value as string;
                 if (content.includes('/') && !content.includes(' ')) {
                     const start = positionFromOffset(source, node.range[0]);
                     const end = positionFromOffset(source, node.range[1] - 1);
@@ -174,7 +174,7 @@ export function findAllColors(source: string): [color: Color, range: Range][] {
     visit(doc, {
         Scalar(_key, node) {
             if (node.range && (typeof node.value === 'string')) {
-                let content = node.value as string;
+                const content = node.value as string;
                 if (isHexColor(content)) {
                     const start = positionFromOffset(source, node.range[0]);
                     const end = positionFromOffset(source, node.range[1] - 1);

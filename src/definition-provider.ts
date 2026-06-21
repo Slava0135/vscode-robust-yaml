@@ -23,13 +23,13 @@ export function registerDefinitionProvider(): vscode.Disposable {
                 if (componentName && datafieldName) {
                     const components = getComponentUris().filter(uri => containsComponentDefinition(uri.toString(), componentName.toString()));
                     if (components.length === 1) {
-                        let uri = components[0];
+                        const uri = components[0];
                         return provideDataFieldDefinition(uri, datafieldName, locations);
                     }
                 }
             } else if (findPath(document.getText(), pos)) {
                 logger.debug(`finding path definition...`);
-                let path = findPath(document.getText(), pos)!!;
+                let path = findPath(document.getText(), pos)!;
                 if (path?.startsWith('/')) {
                     path = path.slice(1);
                 }

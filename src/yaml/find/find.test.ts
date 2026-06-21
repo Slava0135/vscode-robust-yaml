@@ -61,7 +61,7 @@ describe('find component in yaml document', () => {
 
 describe('find all components in yaml document', () => {
     it('one entity - many components', () => {
-        let source = readSource('one-entity-many-components');
+        const source = readSource('one-entity-many-components');
         const components = findAllComponents(source).entries();
         const actual = new Map(Array.from(components, ([k, v]) => {
             return [k.toString(), v];
@@ -77,7 +77,7 @@ describe('find all components in yaml document', () => {
 
 describe('find all fields in yaml document', () => {
     it('one entity - many components', () => {
-        let source = readSource('one-entity-many-components');
+        const source = readSource('one-entity-many-components');
         const components = findAllFields(source).entries();
         const actual = new Map(Array.from(components, ([k, v]) => {
             return [k.toString(), v];
@@ -99,7 +99,7 @@ describe('find all fields in yaml document', () => {
 
 describe('is at component type', () => {
     it('one entity - one component', () => {
-        let source = readSource('one-entity-one-component');
+        const source = readSource('one-entity-one-component');
         assert.ok(isAtComponentType(source, nonZeroBasedPosition(3, 11)));
         assert.ok(isAtComponentType(source, nonZeroBasedPosition(3, 15)));
         assert.equal(isAtComponentType(source, nonZeroBasedPosition(3, 10)), false);
@@ -110,7 +110,7 @@ describe('is at component type', () => {
 
 describe('is at component field', () => {
     it('one entity - one component', () => {
-        let source = readSource('one-entity-one-component');
+        const source = readSource('one-entity-one-component');
         assert.ok(isAtComponentField(source, nonZeroBasedPosition(4, 5)));
         assert.ok(isAtComponentField(source, nonZeroBasedPosition(4, 9)));
         assert.equal(isAtComponentField(source, nonZeroBasedPosition(3, 6)), false);
@@ -122,7 +122,7 @@ describe('is at component field', () => {
 
 describe('find component by field', () => {
     it('one entity - many components', () => {
-        let source = readSource('one-entity-many-components');
+        const source = readSource('one-entity-many-components');
         assert.equal(findComponentByField(source, nonZeroBasedPosition(4, 7)), 'comp1');
         assert.equal(findComponentByField(source, nonZeroBasedPosition(9, 7)), 'comp2');
         assert.equal(findComponentByField(source, nonZeroBasedPosition(14, 7)), 'comp3');
@@ -132,7 +132,7 @@ describe('find component by field', () => {
 
 describe('find field', () => {
     it('one entity - many components', () => {
-        let source = readSource('one-entity-many-components');
+        const source = readSource('one-entity-many-components');
         assert.equal(findField(source, nonZeroBasedPosition(5, 7)), 'key2');
         assert.equal(findField(source, nonZeroBasedPosition(7, 7)), undefined);
     });
@@ -140,7 +140,7 @@ describe('find field', () => {
 
 describe('find all paths', () => {
     it('one path', () => {
-        let source = readSource('one-path');
+        const source = readSource('one-path');
         const paths = findAllPaths(source).entries();
         const actual = new Map(Array.from(paths, ([k, v]) => {
             return [k.toString(), v];
@@ -154,7 +154,7 @@ describe('find all paths', () => {
 
 describe('find all colors', () => {
     it('one color', () => {
-        let source = readSource('one-color');
+        const source = readSource('one-color');
         const actual = findAllColors(source);
         const expected: [color: Color, range: Range][] = [];
         expected.push([new Color(26, 255, 161), new Range(nonZeroBasedPosition(5, 11), nonZeroBasedPosition(5, 19))]);
@@ -164,7 +164,7 @@ describe('find all colors', () => {
 
 describe('find path', () => {
     it('one path', () => {
-        let source = readSource('one-path');
+        const source = readSource('one-path');
         assert.equal(findPath(source, nonZeroBasedPosition(5, 22)), "path/to/file.txt");
         assert.equal(findPath(source, nonZeroBasedPosition(6, 22)), undefined);
     });

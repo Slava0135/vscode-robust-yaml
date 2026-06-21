@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 function initLogging(context: vscode.ExtensionContext) {
     function setLogLevel() {
-        let logLevel = configuration.getLogLevel();
+        const logLevel = configuration.getLogLevel();
         logging.setLevel(logLevel);
     }
     logging.init(vscode.window.createOutputChannel("Robust YAML", "log"));

@@ -15,11 +15,11 @@ export function registerCompletionItemProvider(): vscode.Disposable {
                 return provideComponentType();
             } else if (isAtComponentField(document.getText(), pos)) {
                 logger.debug(`finding items for component field...`);
-                const componentName = findComponentByField(document.getText(), pos)!!;
+                const componentName = findComponentByField(document.getText(), pos)!;
                 const componentUris = getComponentUris().filter(uri => containsComponentDefinition(uri.toString(), componentName));
                 logger.debug(`found ${componentUris.length} candidate components`);
                 if (componentUris.length === 1) {
-                    let uri = componentUris[0];
+                    const uri = componentUris[0];
                     logger.debug(`found component type at ${uri.toString()}`);
                     return vscode.workspace.fs.readFile(uri).then(provideDataFields());
                 }

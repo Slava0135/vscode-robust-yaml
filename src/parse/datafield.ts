@@ -22,11 +22,11 @@ export function parseDataFields(source: string): DataField[] {
     while (i < lines.length) {
         let match = lines[i].match(dataFieldPattern);
         if (match) {
-            let name = (match.groups as {NAME: string}).NAME;
+            const name = (match.groups as {NAME: string}).NAME;
             while (i < lines.length) {
-                let match = lines[i].match(fieldPattern);
+                const match = lines[i].match(fieldPattern);
                 if (match) {
-                    let groups = match.groups as {TYPE: string, NAMES: string};
+                    const groups = match.groups as {TYPE: string, NAMES: string};
                     dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), groups.TYPE, i+1));
                     break;
                 }
@@ -36,10 +36,10 @@ export function parseDataFields(source: string): DataField[] {
             match = lines[i].match(inferredDataFieldPattern);
             if (match) {
                 while (i < lines.length) {
-                    let match = lines[i].match(fieldPattern);
+                    const match = lines[i].match(fieldPattern);
                     if (match) {
-                        let groups = match.groups as {TYPE: string, NAMES: string};
-                        for (let name of groups.NAMES.replaceAll(" ", "").split(",")) {
+                        const groups = match.groups as {TYPE: string, NAMES: string};
+                        for (const name of groups.NAMES.replaceAll(" ", "").split(",")) {
                             dataFields.push(new DataField(name[0].toLowerCase() + name.substring(1), groups.TYPE, i+1));
                         }
                         break;

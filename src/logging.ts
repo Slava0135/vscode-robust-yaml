@@ -25,7 +25,7 @@ interface Channel {
 export function init(outputChannel: Channel) {
     logger.clear();
     const outputStream = new Writable({
-        write(chunk: any, encoding, callback) {
+        write(chunk, encoding, callback) {
             outputChannel.append(chunk.toString());
             callback();
         }
