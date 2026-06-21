@@ -1,3 +1,5 @@
+import { ASCII_WORD_CHARS, WHITESPACE_CHARS } from "./constants";
+
 export class DataField {
     readonly name: string;
     readonly type: string;
@@ -9,16 +11,6 @@ export class DataField {
         this.line = line;
     }
 }
-
-const WHITESPACE_CHARS = new Set([
-    ' ',  // space
-    '\t', // tab
-    '\n', // newline
-]);
-
-const ASCII_WORD_CHARS = new Set(
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_'
-);
 
 export function parseDataFields(source: string): DataField[] {
     const dataFieldAttribute = "DataField";
