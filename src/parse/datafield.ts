@@ -150,6 +150,10 @@ export function parseDataFields(source: string): DataField[] {
                         // no closing para
                         break parseClassField;
                     }
+                    // need to handle nullable types, e.g. 'List<string>?'
+                    if (charIndex + 1 < line.length && !WHITESPACE_CHARS.has(line.charAt(charIndex + 1))) {
+                        charIndex += 1
+                    }
                     break;
                 }
             }

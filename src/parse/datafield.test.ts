@@ -125,6 +125,16 @@ describe('parse datafields', () => {
         assert.deepEqual(parseDataFields(source), [new DataField('guides', 'List<string>', 18)]);
     });
 
+    it('one nullable datafield', () => {
+        const source = readSource('one-datafield-nullable');
+        assert.deepEqual(parseDataFields(source), [new DataField('field', 'SomeType?', 11)]);
+    });
+
+    it('one nullable generic datafield', () => {
+        const source = readSource('one-datafield-nullable-generic');
+        assert.deepEqual(parseDataFields(source), [new DataField('field', 'List<SomeType>?', 11)]);
+    });
+
 });
 
 function readSource(name: string): string {
