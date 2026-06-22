@@ -16,6 +16,10 @@ export class Structure {
         this.firstLine = firstLine;
         this.lastLine = lastLine;
     }
+
+    lineCount(): number {
+        return 1 + this.lastLine - this.firstLine
+    }
 }
 
 export function parseStructures(source: string): Structure[] {
