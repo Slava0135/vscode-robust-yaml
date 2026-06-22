@@ -26,7 +26,7 @@ describe('parse structure', () => {
   it('nested components', () => {
     const source = readSource('nested-components');
     assert.deepEqual(parseStructures(source), [
-      new Structure(StructureKind.Component, "ComponentA", 9, 12),
+      new Structure(StructureKind.Component, "ComponentA", 9, 21),
       new Structure(StructureKind.Component, "ComponentB", 17, 20)
     ]);
   });

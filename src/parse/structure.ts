@@ -121,6 +121,8 @@ export function parseStructures(source: string): Structure[] {
             const lastLine = lineIndex;
 
             structures.push(new Structure(structureKind, name, firstLine + 1, lastLine + 1))
+            // backtrack to class declaration to analyze nested structures
+            lineIndex = firstLine;
         }
 
         lineIndex += 1
